@@ -47,7 +47,7 @@ Response Body Success :
          "name" : "adi prasetya"
     }
 ```
-Response Body Errors :
+Response Body Error :
 
 ```json
 {
@@ -74,7 +74,7 @@ Response Body Success :
         "token" : "unique_id",
     }
 ```
-Response Body Errors :
+Response Body Error :
 
 ```json
 {
