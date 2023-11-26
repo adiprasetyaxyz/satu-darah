@@ -7,7 +7,8 @@ Request Body :
 {
   "username" : "adi",
   "password" : "rahasia",
-  "name" : "adi prasetya"
+  "name" : "adi prasetya",
+  "accountType" : "Provider/User"
 }
 ```
 Response Body Success :
@@ -16,7 +17,8 @@ Response Body Success :
 {
   "data" : {
     "username" : "adi",
-    "name" : "adi prasetya"
+    "name" : "adi prasetya",
+     "accountType" : "Provider/User"
   }
 }
 ```
@@ -36,7 +38,8 @@ Request Body :
 {
     "username" : "adi",
     "password" : "password",
-    "name" : "Adi Prasetya"
+    "name" : "Adi Prasetya",
+     "accountType" : "Provider/User"
 }
 ```
 Response Body Success :
@@ -44,7 +47,8 @@ Response Body Success :
 ```json
     "data" : {
         "username" : "adi",
-         "name" : "adi prasetya"
+         "name" : "adi prasetya",
+          "accountType" : "Provider/User"
     }
 ```
 Response Body Error :

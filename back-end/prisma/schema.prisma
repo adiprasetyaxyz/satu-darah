@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  username        String    @unique @db.VarChar(100)
+  password        String    @db.VarChar(100)
+  name            String    @db.VarChar(100)
+  token           String?   @db.VarChar(100)
+  accountType     String    @db.VarChar(100)
+  events          Event[]   @relation("organizer")
+  registeredEvents Event[]  @relation("participants")
+  registers       Register[] @relation("userRegisters")
+
+  @@map("users")
+}
+
+model Event {
+  id              Int       @id @default(autoincrement())
+  bloodProvider   String    @db.VarChar(100)
+  region          String    @db.VarChar(100)
+  date            DateTime
+  time            String    @db.VarChar(100)
+  location        String    @db.VarChar(255)
+  capacity        Int
+  registered      Int
+  organizerId     Int       @db.Int
+  organizer       User      @relation("organizer", fields: [organizerId], references: [id])
+  participants    User[]    @relation("participants")
+  registers       Register[] @relation("eventRegisters")
+
+  @@map("events")
+}
+
+model Register {
+  id        Int       @id @default(autoincrement())
+  bloodType String?    @db.VarChar(100)
+  userId    Int       @db.Int
+  eventId   Int       @db.Int
+  user      User      @relation("userRegisters", fields: [userId], references: [id])
+  event     Event     @relation("eventRegisters", fields: [eventId], references: [id])
+
+  @@map("registers")
+}
+
+model BloodProvider {
+  id            Int        @id @default(autoincrement())
+  providerName  String
+  address       String
+  phoneNumber   String
+  packedRedCells PackedRedCell[]  @relation("PackedRedCellsRelation")
+  TrombocyteConcentrate TrombocyteConcentrate[] @relation("TrombocyteConcentrateRelation")
+  FreshFrozenPlasma FreshFrozenPlasma[] @relation("FreshFrozenPlasmaRelation")
+  CryoprecipitatedAHF CryoprecipitatedAHF[] @relation("CryoprecipitatedAHFRelation")
+  Leucodepleted Leucodepleted[] @relation("LeucodepletedRelation")
+
+  @@map("blood_providers")
+}
+model PackedRedCell     {
+  id            Int        @id @default(autoincrement())
+  A Int
+  B Int
+  O Int
+  AB Int
+  providerId      Int
+  provider        BloodProvider @relation("PackedRedCellsRelation",fields: [providerId], references: [id])
+
+  @@map("packed_red_cell")
+}
+
+model TrombocyteConcentrate {
+  id              Int       @id @default(autoincrement())
+  A               Int
+  B               Int
+  O               Int
+  AB              Int
+  providerId      Int
+  provider        BloodProvider @relation("TrombocyteConcentrateRelation",fields: [providerId], references: [id])
+
+  @@map("trombocyte_concentrate")
+}
+
+model FreshFrozenPlasma {
+  id              Int       @id @default(autoincrement())
+  A               Int
+  B               Int
+  O               Int
+  AB              Int
+  providerId      Int
+  provider        BloodProvider @relation("FreshFrozenPlasmaRelation", fields: [providerId], references: [id])
+
+  @@map("fresh_frozen_plasma")
+}
+
+model CryoprecipitatedAHF {
+  id              Int       @id @default(autoincrement())
+  A               Int
+  B               Int
+  O               Int
+  AB              Int
+  providerId      Int
+  provider        BloodProvider @relation("CryoprecipitatedAHFRelation",fields: [providerId], references: [id])
+
+  @@map("cryoprecipitated_ahf")
+}
+
+model Leucodepleted {
+  id              Int       @id @default(autoincrement())
+  A               Int
+  B               Int
+  O               Int
+  AB              Int
+  providerId      Int
+  provider        BloodProvider @relation("LeucodepletedRelation", fields: [providerId], references: [id])
+
+  @@map("leucodepleted")
+}
