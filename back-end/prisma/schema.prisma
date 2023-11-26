@@ -8,8 +8,7 @@ datasource db {
 }
 
 model User {
-  id              Int       @id @default(autoincrement())
-  username        String    @unique @db.VarChar(100)
+  username        String    @id @db.VarChar(100)
   password        String    @db.VarChar(100)
   name            String    @db.VarChar(100)
   token           String?   @db.VarChar(100)
@@ -30,8 +29,8 @@ model Event {
   location        String    @db.VarChar(255)
   capacity        Int
   registered      Int
-  organizerId     Int       @db.Int
-  organizer       User      @relation("organizer", fields: [organizerId], references: [id])
+  username        String    @db.VarChar(100)
+  organizer       User      @relation("organizer", fields: [username], references: [username])
   participants    User[]    @relation("participants")
   registers       Register[] @relation("eventRegisters")
 
@@ -41,9 +40,9 @@ model Event {
 model Register {
   id        Int       @id @default(autoincrement())
   bloodType String?    @db.VarChar(100)
-  userId    Int       @db.Int
+  username        String    @db.VarChar(100)
   eventId   Int       @db.Int
-  user      User      @relation("userRegisters", fields: [userId], references: [id])
+  user      User      @relation("userRegisters", fields: [username], references: [username])
   event     Event     @relation("eventRegisters", fields: [eventId], references: [id])
 
   @@map("registers")
