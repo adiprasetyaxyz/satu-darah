@@ -1,6 +1,8 @@
 import supertest from 'supertest';
 import { web } from '../src/application/web.js';
-import { createTestUser, removeAllTestEvent, removeTestUser } from './test-util.js';
+import {
+  createTestEvent, createTestUser, getTestEvent, removeAllTestEvent, removeTestUser,
+} from './test-util.js';
 
 describe('POST /api/events', () => {
   beforeEach(async () => {
@@ -59,5 +61,36 @@ describe('POST /api/events', () => {
     expect(result.status).toBe(400); // Harapannya adalah respons 400 Bad Request
     expect(result.body.errors).toBeDefined();
     // Harapannya adalah terdapat properti 'errors' dalam body respons
+  });
+});
+
+describe('GET /api/events/:eventId', () => {
+  beforeEach(async () => {
+    await createTestUser();
+    await createTestEvent(); // Fungsi untuk membuat event test
+  });
+
+  afterEach(async () => {
+    await removeAllTestEvent(); // Fungsi untuk menghapus semua event test
+    await removeTestUser();
+  });
+
+  it('should can get event', async () => {
+    const testEvent = await getTestEvent();
+
+    const result = await supertest(web)
+      .get(`/api/events/${testEvent.id}`) // Ubah sesuai dengan endpoint yang benar
+      .set('Authorization', 'test');
+
+    expect(result.status).toBe(200);
+    expect(result.body.data.id).toBe(testEvent.id);
+    // Lakukan assertion untuk properti lainnya sesuai dengan yang diharapkan
+    expect(result.body.data.bloodProvider).toBe(testEvent.bloodProvider);
+    expect(result.body.data.region).toBe(testEvent.region);
+    expect(result.body.data.time).toBe(testEvent.time);
+    expect(result.body.data.location).toBe(testEvent.location);
+    expect(result.body.data.capacity).toBe(testEvent.capacity);
+    expect(result.body.data.registered).toBe(testEvent.registered);
+    expect(result.body.data.username).toBe(testEvent.username);
   });
 });

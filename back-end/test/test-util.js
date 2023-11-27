@@ -34,3 +34,24 @@ export const removeAllTestEvent = async () => {
     },
   });
 };
+
+export const createTestEvent = async () => {
+  await prismaClient.event.create({
+    data: {
+      bloodProvider: 'Test Blood Provider',
+      region: 'Test Region',
+      date: new Date().toISOString(), // Gunakan tanggal sekarang
+      time: '08:00 AM',
+      location: 'Test Location',
+      capacity: 50,
+      registered: 0,
+      username: 'test', // Sesuaikan dengan username yang benar
+    },
+  });
+};
+
+export const getTestEvent = async () => prismaClient.event.findFirst({
+  where: {
+    username: 'test',
+  },
+});

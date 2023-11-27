@@ -11,6 +11,8 @@ const createEventValidation = Joi.object({
   username: Joi.string().max(100).required(),
 });
 
+const getEventValidation = Joi.number().positive().required();
 export {
   createEventValidation,
+  getEventValidation,
 };
