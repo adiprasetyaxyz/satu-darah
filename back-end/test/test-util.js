@@ -26,3 +26,11 @@ export const getTestUser = async () => prismaClient.user.findUnique({
     username: 'test',
   },
 });
+
+export const removeAllTestEvent = async () => {
+  await prismaClient.event.deleteMany({
+    where: {
+      username: 'test',
+    },
+  });
+};
