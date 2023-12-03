@@ -2,6 +2,72 @@ $main-color: #EAE7DE;
 $second-color: #C7A17C;
 $accent-color: #2F271C;
 $red: #f52e14;
+/*
+  AppBar
+*/
+ body {
+  font-family: inter, arial;
+ }
+.app-bar {
+  padding: 8px 16px;
+  background-color: white;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+ 
+.app-bar .app-bar__menu {
+  display: flex;
+  align-items: center;
+}
+ 
+.app-bar .app-bar__menu button {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  padding: 8px;
+  cursor: pointer;
+}
+ 
+.app-bar .app-bar__brand {
+  display: flex;
+  align-items: center;
+}
+ 
+.app-bar .app-bar__brand h1 {
+  color: #db0000;
+  text-transform: uppercase;
+  font-size: 22px;
+  user-select: none;
+}
+ 
+.app-bar .app-bar__navigation {
+  position: absolute;
+  top: 50px;
+  left: -180px;
+  width: 150px;
+  transition: all 0.3s;
+  padding: 8px;
+  background-color: white;
+  overflow: hidden;
+}
+ 
+.app-bar .app-bar__navigation.open {
+  left: 0;
+}
+ 
+.app-bar .app-bar__navigation ul li a {
+  display: inline-block;
+  text-decoration: none;
+  color: black;
+  padding: 8px;
+  margin-bottom: 5px;
+  width: 100%;
+}
 #main-nav{
     position: fixed;
     top: 0;
@@ -182,3 +248,78 @@ $red: #f52e14;
       max-width: 800px;
     }
   }
+
+  @media screen and (min-width: 650px) {
+    .app-bar {
+      grid-template-columns: 1fr auto;
+      padding: 8px 32px;
+    }
+   
+    .app-bar .app-bar__brand h1 {
+      font-size: 1.5em;
+    }
+   
+    .app-bar .app-bar__menu {
+      display: none;
+    }
+   
+    .app-bar .app-bar__navigation {
+      position: static;
+      width: 100%;
+    }
+   
+    .app-bar .app-bar__navigation ul li {
+      display: inline-block;
+    }
+   
+    .app-bar .app-bar__navigation ul li a {
+      display: inline-block;
+      width: 120px;
+      text-align: center;
+      margin: 0;
+    }
+   
+    .movies {
+      grid-template-columns: 1fr 1fr;
+    }
+   
+    .movie {
+      grid-template-columns: auto 1fr;
+    }
+   
+    .movie .movie__title {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+   
+    .movie .movie__overview {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+  }
+   
+  @media screen and (min-width: 800px) {
+    .app-bar .app-bar__brand h1 {
+      font-size: 2em;
+    }
+  }
+   
+  @media screen and (min-width: 850px) {
+    .movies {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+   
+  @media screen and (min-width: 1200px) {
+    .movies {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+   
+  @media screen and (min-width: 1600px) {
+    .movies {
+        grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+ 
