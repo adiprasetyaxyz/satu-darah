@@ -49,7 +49,26 @@ const get = async (user, eventId) => {
   return event;
 };
 
+const getAllEvents = async () => {
+  const events = await prismaClient.event.findMany({
+    select: {
+      id: true,
+      bloodProvider: true,
+      region: true,
+      date: true,
+      time: true,
+      location: true,
+      capacity: true,
+      registered: true,
+      username: true,
+    },
+  });
+
+  return events;
+};
+
 export default {
   create,
   get,
+  getAllEvents,
 };

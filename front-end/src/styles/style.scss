@@ -47,6 +47,8 @@ $red: #f52e14;
 }
  
 .app-bar .app-bar__navigation {
+  display: flex;
+  justify-content: start;
   position: absolute;
   top: 50px;
   left: -100%;
@@ -92,18 +94,15 @@ $red: #f52e14;
     text-shadow: 2px 2px 4px #000000;
     padding-left:  10%;
     padding-right: 10%;
-    button:hover {
-      background-color: $red;
-    }
     button {
-    background-color:$red;
+    background-color:white;
     min-height: 44px;
     min-width: 44px;
     padding: 0 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    color: white;
+    color: black;
     a {
       color: white;
       text-decoration: none;
@@ -224,9 +223,149 @@ $red: #f52e14;
       max-width: 800px;
     }
   }
-  @media screen and (min-width: 1000px) {
-  }
+
+  /* CSS untuk form registrasi */
+#registration-form {
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#registration-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#registration-form label,
+#registration-form input,
+#registration-form select {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#registration-form input[type="text"],
+#registration-form input[type="password"],
+#registration-form select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#registration-form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #db0000;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#registration-form input[type="submit"]:hover {
+  background-color: #b80000;
+}
+
+/* CSS untuk form login */
+#login-form {
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#login-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#login-form label,
+#login-form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#login-form input[type="text"],
+#login-form input[type="password"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#login-form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #db0000;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#login-form input[type="submit"]:hover {
+  background-color: #b80000;
+}
+
+  /* CSS untuk tombol dropdown dan kontennya */
+/* ... (CSS lainnya) */
+
+/* Tombol dropdown */
+.dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+flex-direction: row;
+}
+
+.dropbtn {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+
+}
+
+/* Isi dropdown */
+.dropdown-content {
+  margin-top: 200px;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Tampilkan isi dropdown saat tombol diklik */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Tambahkan gaya untuk link di dalam dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Gaya saat link di dalam dropdown dihover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
   @media screen and (min-width: 650px) {
+    .app-bar .app-bar__brand h1 {
+      font-size: 1.5em;
+    }
+   
+  }
+  @media screen and (min-width: 850px) {
     .app-bar .app-bar__menu {
       display: none;
     }
@@ -234,11 +373,6 @@ $red: #f52e14;
       grid-template-columns: 1fr auto;
       padding: 8px 32px;
     }
-   
-    .app-bar .app-bar__brand h1 {
-      font-size: 1.5em;
-    }
-   
   
    
     .app-bar .app-bar__navigation {
