@@ -1,4 +1,5 @@
 import '../styles/style.scss';
+import loginUsername from './utils/login-username';
 // eslint-disable-next-line import/no-unresolved
 import App from './views/App';
 
@@ -11,6 +12,10 @@ const app = new App({
 
 window.addEventListener('hashchange', () => {
   app.renderPage();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  loginUsername();
 });
 
 window.addEventListener('load', () => {

@@ -26,15 +26,15 @@ crossorigin="anonymous">
                 <li><a href="#/about-us">About Us</a></li>
             </ul>
         </nav>
-        <!-- <div class="button-container">
-            <a class="button" href="#login"><button class="button">Login</button></a>
-        </div> -->
-        <div class="dropdown">
-            <h4>Username</h4>
+        <div class="button-container" id="loginButtonContainer">
+            <a class="button" href="#/login"><button class="button">Login</button></a>
+        </div>
+        <div class="dropdown" id="dropdownContainer" style="display: none;">
+            <h4 id="username-corner"></h4>
             <button class="dropbtn"><i class="fa-solid fa-circle-user" style="font-size: 2em;"></i></button>
             <div class="dropdown-content">
-                <a href="#profile">Profile</a>
-                <a href="#settings">Settings</a>
+                <a href="#/profile">Profile</a>
+                <a href="#/settings">Settings</a>
                 <a href="#logout">Logout</a>
             </div>
         </div>
