@@ -14,6 +14,7 @@ model User {
   token           String?   @db.VarChar(100)
   accountType     String    @db.VarChar(100)
   events          Event[]   @relation("organizer")
+  bloodStocks          BloodStock[]   @relation("bloodProvider")
   registeredEvents Event[]  @relation("participants")
   registers       Register[] @relation("userRegisters")
 
@@ -47,76 +48,17 @@ model Register {
 
   @@map("registers")
 }
-
-model BloodProvider {
-  id            Int        @id @default(autoincrement())
-  providerName  String
-  address       String
-  phoneNumber   String
-  packedRedCells PackedRedCell[]  @relation("PackedRedCellsRelation")
-  TrombocyteConcentrate TrombocyteConcentrate[] @relation("TrombocyteConcentrateRelation")
-  FreshFrozenPlasma FreshFrozenPlasma[] @relation("FreshFrozenPlasmaRelation")
-  CryoprecipitatedAHF CryoprecipitatedAHF[] @relation("CryoprecipitatedAHFRelation")
-  Leucodepleted Leucodepleted[] @relation("LeucodepletedRelation")
-
-  @@map("blood_providers")
-}
-model PackedRedCell     {
-  id            Int        @id @default(autoincrement())
-  A Int
-  B Int
-  O Int
-  AB Int
-  providerId      Int
-  provider        BloodProvider @relation("PackedRedCellsRelation",fields: [providerId], references: [id])
-
-  @@map("packed_red_cell")
-}
-
-model TrombocyteConcentrate {
-  id              Int       @id @default(autoincrement())
-  A               Int
-  B               Int
-  O               Int
-  AB              Int
-  providerId      Int
-  provider        BloodProvider @relation("TrombocyteConcentrateRelation",fields: [providerId], references: [id])
-
-  @@map("trombocyte_concentrate")
-}
-
-model FreshFrozenPlasma {
-  id              Int       @id @default(autoincrement())
-  A               Int
-  B               Int
-  O               Int
-  AB              Int
-  providerId      Int
-  provider        BloodProvider @relation("FreshFrozenPlasmaRelation", fields: [providerId], references: [id])
-
-  @@map("fresh_frozen_plasma")
-}
-
-model CryoprecipitatedAHF {
-  id              Int       @id @default(autoincrement())
-  A               Int
-  B               Int
-  O               Int
-  AB              Int
-  providerId      Int
-  provider        BloodProvider @relation("CryoprecipitatedAHFRelation",fields: [providerId], references: [id])
-
-  @@map("cryoprecipitated_ahf")
-}
-
-model Leucodepleted {
-  id              Int       @id @default(autoincrement())
-  A               Int
-  B               Int
-  O               Int
-  AB              Int
-  providerId      Int
-  provider        BloodProvider @relation("LeucodepletedRelation", fields: [providerId], references: [id])
-
-  @@map("leucodepleted")
+model BloodStock {
+  id                   Int                @id @default(autoincrement())
+  providerName         String
+  address              String
+  phoneNumber          String
+  packedRedCells       Json?
+  trombocyteConcentrate Json?
+  freshFrozenPlasma Json?
+  cryoprecipitatedAHF  Json?
+  leucodepleted      Json?
+  username        String    @db.VarChar(100)
+  user      User      @relation("bloodProvider", fields: [username], references: [username])
+  @@map("bloodStocks")
 }
