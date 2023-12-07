@@ -12,7 +12,15 @@ const createEventValidation = Joi.object({
 });
 
 const getEventValidation = Joi.number().positive().required();
+
+const getAllValidation = Joi.object({
+  data: Joi.object({
+    event: Joi.array().items(createEventValidation).required(),
+  }).required(),
+});
+
 export {
   createEventValidation,
   getEventValidation,
+  getAllValidation,
 };

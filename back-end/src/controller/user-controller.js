@@ -3,6 +3,7 @@ import userService from '../services/user-service.js';
 const register = async (req, res, next) => {
   try {
     const result = await userService.register(req.body);
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
       data: result,
     });

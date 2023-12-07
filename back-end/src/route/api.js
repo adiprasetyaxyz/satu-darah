@@ -13,6 +13,7 @@ userRouter.delete('/api/users/logout', userController.logout);
 // eslint-disable-next-line import/no-named-as-default-member
 userRouter.post('/api/events', eventController.create);
 userRouter.get('/api/events/:eventId', eventController.get);
+userRouter.get('/api/list', eventController.getAllEvents);
 
 // eslint-disable-next-line import/prefer-default-export
 export { userRouter };

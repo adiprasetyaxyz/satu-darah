@@ -25,8 +25,20 @@ const get = async (req, res, next) => {
     next(e);
   }
 };
+const getAllEvents = async (req, res, next) => {
+  try {
+    const result = await eventService.getAllEvents();
+    // Memanggil fungsi getAllEvents dari eventService
+    res.status(200).json({
+      events: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 
 export default {
   create,
   get,
+  getAllEvents,
 };
