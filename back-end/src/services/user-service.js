@@ -56,6 +56,7 @@ const login = async (request) => {
     },
     select: {
       token: true,
+      username: true,
     },
   });
 };
@@ -71,6 +72,7 @@ const get = async (username) => {
     select: {
       username: true,
       name: true,
+      accountType: true,
     },
   });
 
