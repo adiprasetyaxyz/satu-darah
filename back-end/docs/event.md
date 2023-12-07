@@ -10,7 +10,7 @@ Request Body :
 
 ```json
 {
-  "blood_provider" : "PMI BALI",
+  "bloodProvider" : "PMI BALI",
   "region" : "Bali",
   "date" : "2 Desember 2023",
   "time" : "08.00 - 10.00",
@@ -26,7 +26,7 @@ Response Body Success :
 {
   "data" : {
     "id" : 1,
-    "blood_provider" : "PMI BALI",
+    "bloodProvider" : "PMI BALI",
     "region" : "Bali",
     "date" : "2 Desember 2023",
     "time" : "08.00 - 10.00",
@@ -56,7 +56,7 @@ Request Body :
 
 ```json
 {
-  "blood_provider" : "PMI BALI",
+  "bloodProvider" : "PMI BALI",
   "region" : "Bali",
   "date" : "2 Desember 2023",
   "time" : "08.00 - 10.00",
@@ -70,7 +70,7 @@ Response Body Success :
 {
   "data" : {
     "id" : 1,
-    "blood_provider" : "PMI BALI",
+    "bloodProvider" : "PMI BALI",
     "region" : "Bali",
     "date" : "2 Desember 2023",
     "time" : "08.00 - 10.00",
@@ -102,7 +102,7 @@ Response Body Success :
 {
   "data" : {
     "id" : 1,
-    "blood_provider" : "PMI BALI",
+    "bloodProvider" : "PMI BALI",
     "region" : "Bali",
     "date" : "2 Desember 2023",
     "time" : "08.00 - 10.00",
@@ -132,7 +132,7 @@ Authorization : token
 
 Query params :
 
-- blood_provider : Search by blood_provider, - using like, optional
+- bloodProvider : Search by bloodProvider, - using like, optional
 - region : Search by region, using like, optional
 - date : Search by date, optional
 - page : number of page, default 1
@@ -144,7 +144,7 @@ Response Body Success :
   "data" : [
     {
       "id" : 1,
-      "blood_provider" : "PMI BALI",
+      "bloodProvider" : "PMI BALI",
       "region" : "Bali",
       "date" : "2 Desember 2023",
       "time" : "08.00 - 10.00",

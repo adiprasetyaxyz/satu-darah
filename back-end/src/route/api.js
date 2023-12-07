@@ -14,6 +14,7 @@ userRouter.delete('/api/users/logout', userController.logout);
 userRouter.post('/api/events', eventController.create);
 userRouter.get('/api/events/:eventId', eventController.get);
 userRouter.get('/api/list', eventController.getAllEvents);
+userRouter.delete('/api/events/:eventId', eventController.deleteEvent);
 
 // eslint-disable-next-line import/prefer-default-export
 export { userRouter };

@@ -67,8 +67,23 @@ const getAllEvents = async () => {
   return events;
 };
 
+const deleteEvent = async (eventId) => {
+  const deletedEvent = await prismaClient.event.delete({
+    where: {
+      id: eventId,
+    },
+  });
+
+  if (!deletedEvent) {
+    throw new ResponseError(404, 'Event not found');
+  }
+
+  return deletedEvent;
+};
+
 export default {
   create,
   get,
   getAllEvents,
+  deleteEvent,
 };

@@ -1,8 +1,12 @@
+import ResponseError from '../error/response-error.js';
 import eventService from '../services/event-service.js';
 
 const create = async (req, res, next) => {
   try {
-    const user = req;
+    const { user } = req;
+    if (user.accountType !== 'Provider') {
+      throw new ResponseError(403, 'Only Provider accounts can create events');
+    }
     const request = req.body;
     const result = await eventService.create(user, request);
     res.status(200).json({
@@ -37,8 +41,33 @@ const getAllEvents = async (req, res, next) => {
   }
 };
 
+const deleteEvent = async (req, res, next) => {
+  try {
+    const { user } = req;
+    if (user.accountType !== 'Provider') {
+      throw new ResponseError(403, 'Only Provider accounts can delete events');
+    }
+    const { eventId } = req.params;
+    const parsedEventId = parseInt(eventId, 10); // Mengonversi nilai string menjadi integer
+
+    // Pastikan parsedEventId adalah angka yang valid sebelum melanjutkan
+    if (Number.isNaN(parsedEventId)) {
+      throw new ResponseError(400, 'Invalid event ID');
+    }
+
+    const result = await eventService.deleteEvent(parsedEventId);
+    res.status(200).json({
+      message: 'Event deleted successfully',
+      deletedEvent: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 export default {
   create,
   get,
   getAllEvents,
+  deleteEvent,
 };
