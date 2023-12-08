@@ -4,9 +4,10 @@ const createRegister = async (req, res, next) => {
   try {
     const { username } = req.user;
     const { eventId } = req.params;
+    const { date } = req.params;
     const parsedEventId = parseInt(eventId, 10);
     const { bloodType } = req.body;
-    const result = await registerService.createRegister(bloodType, username, parsedEventId);
+    const result = await registerService.createRegister(bloodType, username, parsedEventId, date);
     res.status(201).json({
       data: result,
     });

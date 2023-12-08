@@ -81,9 +81,69 @@ const deleteEvent = async (eventId) => {
   return deletedEvent;
 };
 
+const searchEvents = async (region, bloodProvider) => {
+  let events;
+
+  if (region) {
+    events = await prismaClient.event.findMany({
+      where: {
+        region: { contains: region },
+      },
+      select: {
+        id: true,
+        bloodProvider: true,
+        region: true,
+        date: true,
+        time: true,
+        location: true,
+        capacity: true,
+        registered: true,
+        username: true,
+      },
+    });
+  } else if (bloodProvider) {
+    events = await prismaClient.event.findMany({
+      where: {
+        bloodProvider: { contains: bloodProvider },
+      },
+      select: {
+        id: true,
+        bloodProvider: true,
+        region: true,
+        date: true,
+        time: true,
+        location: true,
+        capacity: true,
+        registered: true,
+        username: true,
+      },
+    });
+  } else {
+    // Jika tidak ada kriteria pencarian yang diberikan, ambil semua data
+    events = await prismaClient.bloodStock.findMany({
+      select: {
+        // Properti yang ingin Anda pilih
+        id: true,
+        providerName: true,
+        address: true,
+        phoneNumber: true,
+        packedRedCells: true,
+        trombocyteConcentrate: true,
+        freshFrozenPlasma: true,
+        cryoprecipitatedAHF: true,
+        leucodepleted: true,
+        username: true,
+      },
+    });
+  }
+
+  return events;
+};
+
 export default {
   create,
   get,
   getAllEvents,
   deleteEvent,
+  searchEvents,
 };

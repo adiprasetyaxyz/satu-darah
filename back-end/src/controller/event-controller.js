@@ -65,9 +65,34 @@ const deleteEvent = async (req, res, next) => {
   }
 };
 
+const searchEvents = async (req, res, next) => {
+  try {
+    const { region, bloodProvider } = req.query;
+
+    if (!region && !bloodProvider) {
+      throw new ResponseError(400, 'At least one of region or bloodProvider is required for search');
+    }
+
+    let result;
+
+    if (region) {
+      result = await eventService.searchEvents(region);
+    } else {
+      result = await eventService.searchEvents(bloodProvider);
+    }
+
+    res.status(200).json({
+      events: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 export default {
   create,
   get,
   getAllEvents,
   deleteEvent,
+  searchEvents,
 };
