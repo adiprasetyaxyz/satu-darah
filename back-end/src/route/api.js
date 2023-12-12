@@ -15,13 +15,10 @@ userRouter.delete('/api/users/logout', userController.logout);
 
 // event API
 userRouter.post('/api/events', eventController.create);
-userRouter.get('/api/events/:eventId', eventController.get);
-userRouter.get('/api/list', eventController.getAllEvents);
 userRouter.delete('/api/events/:eventId', eventController.deleteEvent);
 userRouter.get('/api/list/search', eventController.searchEvents);
 
 // Routes untuk BloodStock API
-userRouter.get('/api/blood-stocks', bloodStockController.getAll);
 userRouter.post('/api/blood-stocks', bloodStockController.create);
 userRouter.get('/api/blood-stocks/search', bloodStockController.search);
 userRouter.delete('/api/blood-stocks/:bloodstockId', bloodStockController.remove);
