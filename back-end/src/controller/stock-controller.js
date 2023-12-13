@@ -9,8 +9,9 @@ const create = async (req, res, next) => {
     if (user.accountType !== 'Provider') {
       throw new ResponseError(403, 'Only Provider accounts can create bloodstock');
     }
+    const { username } = req.user;
     const request = req.body;
-    const result = await bloodStockService.createStock(user, request);
+    const result = await bloodStockService.createStock(user, request, username);
     res.status(200).json({
       data: result,
     });
@@ -59,9 +60,29 @@ const remove = async (req, res, next) => {
   }
 };
 
+const search = async (req, res, next) => {
+  try {
+    const { region, provider } = req.query;
+    let result;
+
+    if (region || provider) {
+      result = await bloodStockService.searchStock(region, provider);
+    } else {
+      result = await bloodStockService.searchStock();
+    }
+
+    res.status(200).json({
+      bloodStock: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 export default {
   create,
   getAll,
   update,
   remove,
+  search,
 };

@@ -2,6 +2,7 @@ import Joi from 'joi';
 
 const bloodStockValidation = Joi.object({
   providerName: Joi.string().max(255).required(),
+  region: Joi.string().max(255).required(),
   address: Joi.string().max(500).required(),
   phoneNumber: Joi.string().max(20).required(),
   packedRedCells: Joi.object().optional(),

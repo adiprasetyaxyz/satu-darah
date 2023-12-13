@@ -1,15 +1,19 @@
 import SatuDarahSource from '../../data/satu-darah-source';
+import { navigateTo } from '../../utils/navigate';
 import { createEvent } from './template/template-creator';
 
 const CreateEvent = {
   async render() {
     return `
-        <div id="create-event"></div>
+    <div id="create-notif"></div>
+    <div id="create-event"></div>
+    
       `;
   },
 
   async afterRender() {
     const createEventContainer = document.getElementById('create-event');
+    const createNotif = document.getElementById('create-notif');
     createEventContainer.innerHTML += createEvent();
     const createForm = document.getElementById('create-form');
     createForm.addEventListener('submit', async (event) => {
@@ -25,13 +29,14 @@ const CreateEvent = {
         // Lakukan navigasi atau tindakan lain setelah event berhasil dibuat
 
         // Misalnya, tambahkan pesan ke halaman bahwa event berhasil dibuat
-        createEventContainer.innerHTML = '<p>Event created successfully!</p>';
+        createNotif.innerHTML = '<p>Event created successfully!</p>';
+        await navigateTo('/#/profile');
       } catch (error) {
         console.error('Failed to create event:', error.message);
         // Tangani kesalahan jika gagal membuat event
 
         // Misalnya, tambahkan pesan kesalahan ke halaman
-        createEventContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+        createNotif.innerHTML = `<p>Error: ${error.message}</p>`;
       }
     });
   },

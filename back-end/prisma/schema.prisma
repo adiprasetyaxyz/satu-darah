@@ -52,6 +52,7 @@ model BloodStock {
   id                   Int                @id @default(autoincrement())
   providerName         String
   address              String
+  region               String
   phoneNumber          String
   packedRedCells       Json?
   trombocyteConcentrate Json?

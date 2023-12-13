@@ -1,5 +1,6 @@
 import axios from 'axios';
 import token from '../utils/token';
+import CONFIG from '../globals/config';
 
 class SatuDarahSource {
   static async getAllEvent() {
@@ -11,10 +12,71 @@ class SatuDarahSource {
     };
     console.log(`token:${token}`);
     try {
-      const response = await axios.get('http://localhost:3000/api/list', axiosConfig);
+      const response = await axios.get(`${CONFIG.BASE_URL}api/list`, axiosConfig);
       console.log(response.status);
       const { events } = response.data;
+      console.log(response.data);
       return events || [];
+    } catch (error) {
+      // Menangani kesalahan yang terjadi saat melakukan permintaan
+      console.error('Error fetching events:', error);
+      return []; // Mengembalikan array kosong jika terjadi kesalahan
+    }
+  }
+
+  static async getEvent(eventId) {
+    // Membuat konfigurasi Axios dengan token sebagai header Authorization
+    const axiosConfig = {
+      headers: {
+        Authorization: token, // Menambahkan token ke header Authorization dengan skema "Bearer"
+      },
+    };
+    console.log(`token:${token}`);
+    try {
+      const response = await axios.get(`${CONFIG.BASE_URL}api/events/${eventId}`, axiosConfig);
+      console.log(response.status);
+      console.log(response.data);
+      return response.data || [];
+    } catch (error) {
+      // Menangani kesalahan yang terjadi saat melakukan permintaan
+      console.error('Error fetching events:', error);
+      return []; // Mengembalikan array kosong jika terjadi kesalahan
+    }
+  }
+
+  static async deleteEvent(eventId) {
+    const axiosConfig = {
+      headers: {
+        Authorization: token, // Menambahkan token ke header Authorization dengan skema "Bearer"
+      },
+    };
+
+    try {
+      const response = await axios.delete(`${CONFIG.BASE_URL}api/events/${eventId}`, axiosConfig);
+      console.log(response.status);
+      return response.data; // Mengembalikan data dari server jika diperlukan
+    } catch (error) {
+      // Menangani kesalahan yang terjadi saat melakukan permintaan
+      console.error('Error deleting event:', error);
+      throw new Error('Failed to delete event');
+    }
+  }
+
+  static async getAllstock() {
+    // Membuat konfigurasi Axios dengan token sebagai header Authorization
+    const axiosConfig = {
+      headers: {
+        Authorization: token, // Menambahkan token ke header Authorization dengan skema "Bearer"
+      },
+    };
+    console.log(`token:${token}`);
+    try {
+      const response = await axios.get(`${CONFIG.BASE_URL}api/blood-stocks`, axiosConfig);
+      const bloodStocks = response.data.bloodStock;
+
+      console.log(bloodStocks); // Menampilkan data bloodStock ke konsol
+
+      return bloodStocks || [];
     } catch (error) {
       // Menangani kesalahan yang terjadi saat melakukan permintaan
       console.error('Error fetching events:', error);
@@ -30,7 +92,7 @@ class SatuDarahSource {
     };
     console.log(`token:${token}`);
     try {
-      const response = await axios.get('http://localhost:3000/api/users/current', axiosConfig);
+      const response = await axios.get(`${CONFIG.BASE_URL}api/users/current`, axiosConfig);
       console.log(response.status);
       const { data } = response.data;
       return data;
@@ -49,7 +111,24 @@ class SatuDarahSource {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/api/events/', eventData, axiosConfig);
+      const response = await axios.post(`${CONFIG.BASE_URL}api/events/`, eventData, axiosConfig);
+      console.log(response.status);
+      return response.data; // Mengembalikan data event yang dibuat dari server jika diperlukan
+    } catch (error) {
+      console.error('Error creating event:', error);
+      throw new Error('Failed to create event');
+    }
+  }
+
+  static async createStock(stockData) {
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    try {
+      const response = await axios.post(`${CONFIG.BASE_URL}api/blood-stocks/`, stockData, axiosConfig);
       console.log(response.status);
       return response.data; // Mengembalikan data event yang dibuat dari server jika diperlukan
     } catch (error) {
@@ -66,12 +145,156 @@ class SatuDarahSource {
     };
 
     try {
-      const response = await axios.delete('http://localhost:3000/api/users/logout', axiosConfig);
+      const response = await axios.delete(`${CONFIG.BASE_URL}api/users/logout`, axiosConfig);
       console.log(response.status);
       return response.data;
     } catch (error) {
       console.error('Error creating event:', error);
       throw new Error('Failed to create event');
+    }
+  }
+
+  static async deleteBloodStock(bloodstockId) {
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    try {
+      const response = await axios.delete(`${CONFIG.BASE_URL}api/blood-stocks/${bloodstockId}`, axiosConfig);
+      console.log(response.status);
+      return response.data; // Mengembalikan data dari server jika diperlukan
+    } catch (error) {
+      console.error('Error deleting blood stock:', error);
+      throw new Error('Failed to delete blood stock');
+    }
+  }
+
+  static async updateBloodStock(bloodstockId, updatedData) {
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    try {
+      const response = await axios.put(`${CONFIG.BASE_URL}api/blood-stocks/${bloodstockId}`, updatedData, axiosConfig);
+      console.log(response.status);
+      return response.data; // Mengembalikan data dari server jika diperlukan
+    } catch (error) {
+      console.error('Error updating blood stock:', error);
+      throw new Error('Failed to update blood stock');
+    }
+  }
+
+  static async searchEvent(searchQuery) {
+    let apiUrl = `${CONFIG.BASE_URL}api/list/search`;
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+      params: {},
+    };
+
+    // Jika query pencarian tidak kosong, tambahkan parameter pencarian
+    if (searchQuery) {
+      axiosConfig.params.region = searchQuery;
+    } else {
+      // Jika query pencarian kosong, kosongkan parameter pencarian
+      axiosConfig.params = {};
+      apiUrl = `${CONFIG.BASE_URL}api/list`;
+    }
+
+    try {
+      const response = await axios.get(apiUrl, axiosConfig);
+      console.log(response.status);
+      const { events } = response.data;
+      console.log(response.data);
+      return events;
+    } catch (error) {
+      console.error('Error fetching events:', error);
+      return [];
+    }
+  }
+
+  static async searchStock(searchQuery) {
+    let apiUrl = `${CONFIG.BASE_URL}api/blood-stocks/search`;
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+      params: {},
+    };
+
+    // Jika query pencarian tidak kosong, tambahkan parameter pencarian
+    if (searchQuery) {
+      axiosConfig.params.region = searchQuery;
+      console.log(axiosConfig.params.region);
+    } else {
+      // Jika query pencarian kosong, kosongkan parameter pencarian
+      axiosConfig.params = {};
+      apiUrl = `${CONFIG.BASE_URL}api/blood-stocks`;
+    }
+
+    try {
+      const response = await axios.get(apiUrl, axiosConfig);
+      console.log(response.status);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching stocks:', error);
+      return [];
+    }
+  }
+
+  static async registerEvent(eventId, registerData) {
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    try {
+      const response = await axios.post(`${CONFIG.BASE_URL}api/events/${eventId}/register`, registerData, axiosConfig);
+      console.log(response.status);
+      return response.data; // Return registered event data from the server if needed
+    } catch (error) {
+      console.error('Error registering event:', error);
+      throw new Error('Failed to register event');
+    }
+  }
+
+  static async getRegisterEvent(eventId, registerId) {
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    try {
+      const response = await axios.get(`${CONFIG.BASE_URL}api/events/${eventId}/register/${registerId}`, axiosConfig);
+      console.log(response.status);
+      return response.data; // Return register details data from the server if needed
+    } catch (error) {
+      console.error('Error fetching register details:', error);
+      throw new Error('Failed to fetch register details');
+    }
+  }
+
+  static async getAllRegisterEvent(eventId) {
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    try {
+      const response = await axios.get(`${CONFIG.BASE_URL}api/events/${eventId}/register/`, axiosConfig);
+      console.log(response.status);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching all registers:', error);
+      throw new Error('Failed to fetch all registers');
     }
   }
 }

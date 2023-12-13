@@ -169,7 +169,7 @@ $red: #f52e14;
     flex-direction: row ;
     gap: 20px;
   }
-  #show-event {
+  #show-event, #profile-event {
     display: grid;
     grid-template-columns: repeat(2 , 1fr); gap: 20px;
     font-size: 16px;

@@ -1,3 +1,4 @@
+import CONFIG from '../../globals/config';
 import { navigateTo } from '../../utils/navigate';
 
 const Login = {
@@ -23,7 +24,7 @@ const Login = {
       const loginData = Object.fromEntries(formData.entries());
 
       try {
-        const response = await fetch('http://localhost:3000/api/users/login', {
+        const response = await fetch(`${CONFIG.BASE_URL}api/users/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

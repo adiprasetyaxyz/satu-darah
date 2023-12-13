@@ -1,19 +1,20 @@
-// bloodStockService.js
-
 import { prismaClient } from '../application/database.js';
 import validate from '../validation/validation.js';
 import { bloodStockValidation } from '../validation/stock-validation.js';
 import ResponseError from '../error/response-error.js';
 
-const createStock = async (user, request) => {
+const createStock = async (user, request, username) => {
   const bloodstockData = validate(bloodStockValidation, request);
-
   return prismaClient.bloodStock.create({
-    data: bloodstockData,
+    data: {
+      ...bloodstockData,
+      username,
+    },
     select: {
       id: true,
       providerName: true,
       address: true,
+      region: true,
       phoneNumber: true,
       packedRedCells: true,
       trombocyteConcentrate: true,
@@ -30,6 +31,7 @@ const getAllBloodstock = async () => {
       id: true,
       providerName: true,
       address: true,
+      region: true,
       phoneNumber: true,
       packedRedCells: true,
       trombocyteConcentrate: true,
@@ -37,7 +39,6 @@ const getAllBloodstock = async () => {
       cryoprecipitatedAHF: true,
       leucodepleted: true,
       username: true,
-      // Tambahkan properti lain yang ingin Anda pilih
     },
   });
 
@@ -54,6 +55,7 @@ const updateStock = async (bloodstockId, updatedBloodstockData) => {
       id: true,
       providerName: true,
       address: true,
+      region: true,
       phoneNumber: true,
       packedRedCells: true,
       trombocyteConcentrate: true,
@@ -61,7 +63,6 @@ const updateStock = async (bloodstockId, updatedBloodstockData) => {
       cryoprecipitatedAHF: true,
       leucodepleted: true,
       username: true,
-      // Tambahkan properti lain yang ingin Anda perbarui
     },
   });
 
@@ -85,9 +86,73 @@ const deleteStock = async (bloodstockId) => {
 
   return deletedBloodstock;
 };
+
+const searchStock = async (region, provider) => {
+  let bloodstock;
+
+  if (region) {
+    bloodstock = await prismaClient.bloodStock.findMany({
+      where: {
+        region: { contains: region },
+      },
+      select: {
+        id: true,
+        providerName: true,
+        address: true,
+        region: true,
+        phoneNumber: true,
+        packedRedCells: true,
+        trombocyteConcentrate: true,
+        freshFrozenPlasma: true,
+        cryoprecipitatedAHF: true,
+        leucodepleted: true,
+        username: true,
+      },
+    });
+  } else if (provider) {
+    bloodstock = await prismaClient.bloodStock.findMany({
+      where: {
+        providerName: { contains: provider },
+      },
+      select: {
+        id: true,
+        providerName: true,
+        address: true,
+        region: true,
+        phoneNumber: true,
+        packedRedCells: true,
+        trombocyteConcentrate: true,
+        freshFrozenPlasma: true,
+        cryoprecipitatedAHF: true,
+        leucodepleted: true,
+        username: true,
+      },
+    });
+  } else {
+    bloodstock = await prismaClient.bloodStock.findMany({
+      select: {
+        id: true,
+        providerName: true,
+        address: true,
+        region: true,
+        phoneNumber: true,
+        packedRedCells: true,
+        trombocyteConcentrate: true,
+        freshFrozenPlasma: true,
+        cryoprecipitatedAHF: true,
+        leucodepleted: true,
+        username: true,
+      },
+    });
+  }
+
+  return bloodstock;
+};
+
 export default {
   createStock,
   getAllBloodstock,
   updateStock,
   deleteStock,
+  searchStock,
 };

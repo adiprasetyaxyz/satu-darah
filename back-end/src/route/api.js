@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-named-as-default-member
 /* eslint-disable import/prefer-default-export */
 import express from 'express';
 import userController from '../controller/user-controller.js';
@@ -13,14 +14,11 @@ userRouter.get('/api/users/current', userController.get);
 userRouter.delete('/api/users/logout', userController.logout);
 
 // event API
-// eslint-disable-next-line import/no-named-as-default-member
 userRouter.post('/api/events', eventController.create);
-userRouter.get('/api/events/:eventId', eventController.get);
-userRouter.get('/api/list', eventController.getAllEvents);
 userRouter.delete('/api/events/:eventId', eventController.deleteEvent);
 
 // Routes untuk BloodStock API
-userRouter.get('/api/blood-stocks', bloodStockController.getAll);
+userRouter.post('/api/blood-stocks', bloodStockController.create);
 userRouter.delete('/api/blood-stocks/:bloodstockId', bloodStockController.remove);
 userRouter.put('/api/blood-stocks/:bloodstockId', bloodStockController.update);
 
