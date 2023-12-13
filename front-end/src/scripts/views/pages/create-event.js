@@ -1,4 +1,5 @@
 import SatuDarahSource from '../../data/satu-darah-source';
+import { navigateTo } from '../../utils/navigate';
 import { createEvent } from './template/template-creator';
 
 const CreateEvent = {
@@ -29,6 +30,7 @@ const CreateEvent = {
 
         // Misalnya, tambahkan pesan ke halaman bahwa event berhasil dibuat
         createNotif.innerHTML = '<p>Event created successfully!</p>';
+        await navigateTo('/#/profile');
       } catch (error) {
         console.error('Failed to create event:', error.message);
         // Tangani kesalahan jika gagal membuat event

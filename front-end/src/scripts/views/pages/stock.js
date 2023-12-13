@@ -1,11 +1,15 @@
 /* eslint-disable no-plusplus */
 import SatuDarahSource from '../../data/satu-darah-source';
+import ProvinceList from '../../utils/province-list';
 import { createBloodStock } from './template/template-creator';
 
 const Stock = {
   async render() {
     return `
       <h2>Temukan Stok Darah</h2>
+      <select id="province-dropdown">
+      <option value="">Semua Provinsi</option>
+    </select>
       <div id="blood-stock"></div>
       <div id="pagination-buttons">
         <button id="prev-page">Previous Page</button>
@@ -16,6 +20,7 @@ const Stock = {
   },
 
   async afterRender() {
+    ProvinceList();
     const bloodStockContainer = document.getElementById('blood-stock');
     const prevPageButton = document.getElementById('prev-page');
     const nextPageButton = document.getElementById('next-page');
@@ -54,9 +59,24 @@ const Stock = {
         pageNumberContainer.appendChild(pageButton);
       }
     };
+    const provinceDropdown = document.getElementById('province-dropdown');
 
+    provinceDropdown.addEventListener('change', async (event) => {
+      const selectedProvince = event.target.value.toLowerCase().trim();
+
+      if (selectedProvince !== '') {
+        const searchedEvents = await SatuDarahSource.searchStock(selectedProvince);
+        console.log(searchedEvents);
+        displayBloodStocks(searchedEvents, 1); // Menampilkan hasil pencarian pada halaman pertama
+        displayPageNumbers(Math.ceil(searchedEvents.length / pageSize));
+      } else {
+        await displayPageNumbers(); // Update page numbers based on search results
+        await displayBloodStocks(currentPage);
+      }
+    });
+
+    await displayPageNumbers(); // Update page numbers based on search results
     await displayBloodStocks(currentPage);
-    await displayPageNumbers();
 
     prevPageButton.addEventListener('click', async () => {
       if (currentPage > 1) {

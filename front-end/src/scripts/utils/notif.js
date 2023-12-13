@@ -26,7 +26,7 @@ const notif = async () => {
 
       // Buat notifikasi untuk event terbaru
       const latestEventNotification = document.createElement('a');
-      latestEventNotification.href = '#/event'; // Ganti dengan URL yang sesuai untuk event terbaru
+      latestEventNotification.href = '#/event';
       latestEventNotification.textContent = `Terbaru: ${latestEvent.bloodProvider} Mengadakan Event Donor Darah`;
 
       // Tambahkan notifikasi event terbaru ke dalam elemen notifikasi

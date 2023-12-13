@@ -22,13 +22,12 @@ const create = async (user, request) => {
   });
 };
 
-const get = async (user, eventId) => {
+const get = async (eventId) => {
   // eslint-disable-next-line no-param-reassign
   eventId = validate(getEventValidation, eventId);
 
   const event = await prismaClient.event.findFirst({
     where: {
-      username: user.username,
       id: eventId,
     },
     select: {

@@ -1,11 +1,16 @@
 /* eslint-disable no-plusplus */
 import SatuDarahSource from '../../data/satu-darah-source';
+import ProvinceList from '../../utils/province-list';
 import { createEventList } from './template/template-creator';
 
 const Event = {
   async render() {
     return `
       <h2 class="show-event">Events</h2>
+      <select id="province-dropdown">
+      <option value="">Semua Provinsi</option>
+    </select>
+    
       <div id="show-event"></div>
       <div id="pagination-buttons">
         <button id="prev-page">Previous Page</button>
@@ -16,6 +21,7 @@ const Event = {
   },
 
   async afterRender() {
+    ProvinceList();
     const events = await SatuDarahSource.getAllEvent();
     const eventContainer = document.getElementById('show-event');
     const prevPageButton = document.getElementById('prev-page');
@@ -67,8 +73,43 @@ const Event = {
       }
     };
 
+    const provinceDropdown = document.getElementById('province-dropdown');
+
+    provinceDropdown.addEventListener('change', async (event) => {
+      const selectedProvince = event.target.value.toLowerCase().trim();
+
+      if (selectedProvince !== '') {
+        const searchedEvents = await SatuDarahSource.searchEvent(selectedProvince);
+        displayEvents(searchedEvents, 1); // Menampilkan hasil pencarian pada halaman pertama
+        displayPageNumbers(Math.ceil(searchedEvents.length / pageSize));
+      } else {
+        // Handle jika tidak ada provinsi yang dipilih (misalnya menampilkan semua event)
+        const allEvents = await SatuDarahSource.getAllEvent();
+        displayEvents(allEvents, 1);
+        displayPageNumbers(Math.ceil(allEvents.length / pageSize));
+      }
+    });
     const maxPage = Math.ceil(events.length / pageSize);
     displayPageNumbers(maxPage);
+
+    eventContainer.addEventListener('click', async (event) => {
+      // Periksa apakah yang diklik adalah tombol Daftar Event
+      if (event.target.id.startsWith('daftar-')) {
+        const eventId = event.target.id.split('-')[1];
+
+        // Periksa apakah authToken ada di local storage
+        const authToken = localStorage.getItem('authToken');
+        if (!authToken) {
+          // Jika tidak ada authToken, tampilkan popup login
+          const confirmed = confirm('Login untuk Daftar Event. Apakah Anda ingin login sekarang?');
+          if (confirmed) {
+            window.location.href = '#/login'; // Ganti dengan URL login yang sesuai
+          }
+        } else {
+          window.location.href = `#/register-event/${eventId}`;
+        }
+      }
+    });
   },
 };
 

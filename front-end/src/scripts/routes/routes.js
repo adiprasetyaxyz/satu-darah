@@ -1,5 +1,6 @@
 import About from '../views/pages/about';
 import CreateEvent from '../views/pages/create-event';
+import CreateRegisterEvent from '../views/pages/create-register-event';
 import CreateStock from '../views/pages/create-stock';
 import Event from '../views/pages/event';
 import Home from '../views/pages/home';
@@ -21,7 +22,7 @@ const routes = {
   '/create-event': CreateEvent,
   '/create-stock': CreateStock,
   '/update-stock': UpdateStock,
-//   '/stock/:id': Detail,
+  '/register-event/:id': CreateRegisterEvent,
 };
 
 export default routes;

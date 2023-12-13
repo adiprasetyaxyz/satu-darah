@@ -33,11 +33,10 @@ class SatuDarahSource {
     };
     console.log(`token:${token}`);
     try {
-      const response = await axios.get(`${CONFIG.BASE_URL}events/${eventId}`, axiosConfig);
+      const response = await axios.get(`${CONFIG.BASE_URL}api/events/${eventId}`, axiosConfig);
       console.log(response.status);
-      const { events } = response.data;
       console.log(response.data);
-      return events || [];
+      return response.data || [];
     } catch (error) {
       // Menangani kesalahan yang terjadi saat melakukan permintaan
       console.error('Error fetching events:', error);
@@ -186,6 +185,116 @@ class SatuDarahSource {
     } catch (error) {
       console.error('Error updating blood stock:', error);
       throw new Error('Failed to update blood stock');
+    }
+  }
+
+  static async searchEvent(searchQuery) {
+    let apiUrl = `${CONFIG.BASE_URL}api/list/search`;
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+      params: {},
+    };
+
+    // Jika query pencarian tidak kosong, tambahkan parameter pencarian
+    if (searchQuery) {
+      axiosConfig.params.region = searchQuery;
+    } else {
+      // Jika query pencarian kosong, kosongkan parameter pencarian
+      axiosConfig.params = {};
+      apiUrl = `${CONFIG.BASE_URL}api/list`;
+    }
+
+    try {
+      const response = await axios.get(apiUrl, axiosConfig);
+      console.log(response.status);
+      const { events } = response.data;
+      console.log(response.data);
+      return events;
+    } catch (error) {
+      console.error('Error fetching events:', error);
+      return [];
+    }
+  }
+
+  static async searchStock(searchQuery) {
+    let apiUrl = `${CONFIG.BASE_URL}api/blood-stocks/search`;
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+      params: {},
+    };
+
+    // Jika query pencarian tidak kosong, tambahkan parameter pencarian
+    if (searchQuery) {
+      axiosConfig.params.region = searchQuery;
+      console.log(axiosConfig.params.region);
+    } else {
+      // Jika query pencarian kosong, kosongkan parameter pencarian
+      axiosConfig.params = {};
+      apiUrl = `${CONFIG.BASE_URL}api/blood-stocks`;
+    }
+
+    try {
+      const response = await axios.get(apiUrl, axiosConfig);
+      console.log(response.status);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching stocks:', error);
+      return [];
+    }
+  }
+
+  static async registerEvent(eventId, registerData) {
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    try {
+      const response = await axios.post(`${CONFIG.BASE_URL}api/events/${eventId}/register`, registerData, axiosConfig);
+      console.log(response.status);
+      return response.data; // Return registered event data from the server if needed
+    } catch (error) {
+      console.error('Error registering event:', error);
+      throw new Error('Failed to register event');
+    }
+  }
+
+  static async getRegisterEvent(eventId, registerId) {
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    try {
+      const response = await axios.get(`${CONFIG.BASE_URL}api/events/${eventId}/register/${registerId}`, axiosConfig);
+      console.log(response.status);
+      return response.data; // Return register details data from the server if needed
+    } catch (error) {
+      console.error('Error fetching register details:', error);
+      throw new Error('Failed to fetch register details');
+    }
+  }
+
+  static async getAllRegisterEvent(eventId) {
+    const axiosConfig = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    try {
+      const response = await axios.get(`${CONFIG.BASE_URL}api/events/${eventId}/register/`, axiosConfig);
+      console.log(response.status);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching all registers:', error);
+      throw new Error('Failed to fetch all registers');
     }
   }
 }

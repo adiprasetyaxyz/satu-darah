@@ -39,7 +39,7 @@ const createEventList = (event) => {
               </tr>
             </table>
           </div>
-          <button id="daftar" onclick="location.href='#'">Daftar Akun</button>
+          <button id="daftar-${event.id}">Daftar Event</button>
         </div>
       </div>
     `;
@@ -276,9 +276,103 @@ const createBloodStock = (bloodStock) => `
     <td>Phone Number</td>
     <td>${bloodStock.phoneNumber}</td>
   </tr>
+  </table>
+  <button id="request" class="requestBtn">Request Stock Darah</button>
+`;
+const createMyBloodStock = (bloodStock) => `
+<table>
+  <tr>
+    <td>Komposisi</td>
+    <td>Gol A</td>
+    <td>Gol B</td>
+    <td>Gol O</td>
+    <td>Gol AB</td>
+  </tr>
+  <tr>
+    <td>Packed Red Cells</td>
+    <td>${bloodStock.packedRedCells ? bloodStock.packedRedCells.A : '0'}</td>
+    <td>${bloodStock.packedRedCells ? bloodStock.packedRedCells.B : '0'}</td>
+    <td>${bloodStock.packedRedCells ? bloodStock.packedRedCells.O : '0'}</td>
+    <td>${bloodStock.packedRedCells ? bloodStock.packedRedCells.AB : '0'}</td>
+  </tr>
+  <tr>
+    <td>Trombocyte Concentrate</td>
+    <td>${bloodStock.trombocyteConcentrate ? bloodStock.trombocyteConcentrate.A : '0'}</td>
+    <td>${bloodStock.trombocyteConcentrate ? bloodStock.trombocyteConcentrate.B : '0'}</td>
+    <td>${bloodStock.trombocyteConcentrate ? bloodStock.trombocyteConcentrate.O : '0'}</td>
+    <td>${bloodStock.trombocyteConcentrate ? bloodStock.trombocyteConcentrate.AB : '0'}</td>
+  </tr>
+  <tr>
+    <td>Fresh Frozen Plasma</td>
+    <td>${bloodStock.freshFrozenPlasma ? bloodStock.freshFrozenPlasma.A : '0'}</td>
+    <td>${bloodStock.freshFrozenPlasma ? bloodStock.freshFrozenPlasma.B : '0'}</td>
+    <td>${bloodStock.freshFrozenPlasma ? bloodStock.freshFrozenPlasma.O : '0'}</td>
+    <td>${bloodStock.freshFrozenPlasma ? bloodStock.freshFrozenPlasma.AB : '0'}</td>
+  </tr>
+  <tr>
+    <td>Cryoprecipitated AHF</td>
+    <td>${bloodStock.cryoprecipitatedAHF ? bloodStock.cryoprecipitatedAHF.A : '0'}</td>
+    <td>${bloodStock.cryoprecipitatedAHF ? bloodStock.cryoprecipitatedAHF.B : '0'}</td>
+    <td>${bloodStock.cryoprecipitatedAHF ? bloodStock.cryoprecipitatedAHF.O : '0'}</td>
+    <td>${bloodStock.cryoprecipitatedAHF ? bloodStock.cryoprecipitatedAHF.AB : '0'}</td>
+  </tr>
+  <tr>
+    <td>Leucodepleted</td>
+    <td>${bloodStock.leucodepleted ? bloodStock.leucodepleted.A : '0'}</td>
+    <td>${bloodStock.leucodepleted ? bloodStock.leucodepleted.B : '0'}</td>
+    <td>${bloodStock.leucodepleted ? bloodStock.leucodepleted.O : '0'}</td>
+    <td>${bloodStock.leucodepleted ? bloodStock.leucodepleted.AB : '0'}</td>
+  </tr>
+</table>
+
+<table>
+<tr>
+  <td>Username</td>
+  <td>${bloodStock.username}</td>
+</tr>
+  <tr>
+    <th>Field</th>
+    <th>Data</th>
+  </tr>
+  <tr>
+    <td>ID</td>
+    <td>${bloodStock.id}</td>
+  </tr>
+  <tr>
+    <td>Provider Name</td>
+    <td>${bloodStock.providerName}</td>
+  </tr>
+  <tr>
+    <td>Address</td>
+    <td>${bloodStock.address}</td>
+  </tr>
+  <tr>
+    <td>Region</td>
+    <td>${bloodStock.region}</td>
+  </tr>
+  <tr>
+    <td>Phone Number</td>
+    <td>${bloodStock.phoneNumber}</td>
+  </tr>
+  </table>
   <button id="delete-stock-${bloodStock.id}" class="delete-btn">Delete Event</button>
-  <button id="update-stock">Ubah Event</button>
-</table>`;
+
+`;
+
+const createRegisterForm = () => `
+    <form id="register-form">
+      <label for="nama">Nama:</label>
+      <input type="text" id="nama" name="nama"><br><br>
+      
+      <label for="umur">Umur:</label>
+      <input type="number" id="umur" name="umur"><br><br>
+      
+      <label for="bloodType">Golongan Darah:</label>
+      <input type="text" id="bloodType" name="bloodType" required><br><br>
+      
+      <button type="submit">Register</button>
+    </form>
+  `;
 
 export {
   createEventList,
@@ -286,5 +380,7 @@ export {
   createEvent,
   stockFormCreator,
   createBloodStock,
+  createMyBloodStock,
   createMyEventList,
+  createRegisterForm,
 };

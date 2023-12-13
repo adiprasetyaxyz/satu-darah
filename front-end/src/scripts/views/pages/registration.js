@@ -18,6 +18,7 @@ const Registration = {
         <option value="Provider">Provider</option>
       </select><br><br>
       <input type="submit" value="Register">
+      <button id="login" onclick="location.href='#/login'">Login</button>
     </form>
     
       `;

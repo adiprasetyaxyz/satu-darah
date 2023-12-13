@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import SatuDarahSource from '../../data/satu-darah-source';
+import { navigateTo } from '../../utils/navigate';
 import { stockFormCreator } from './template/template-creator';
 
 const UpdateStock = {
@@ -133,6 +134,7 @@ const UpdateStock = {
         // Handle tindakan setelah stok berhasil diperbarui
         const updateStockContainer = document.getElementById('create-stock');
         updateStockContainer.innerHTML = '<p>Stock updated successfully!</p>';
+        await navigateTo('/#/profile');
       } catch (error) {
         console.error('Failed to update stock:', error.message);
         // Handle kesalahan ketika melakukan pembaharuan stok

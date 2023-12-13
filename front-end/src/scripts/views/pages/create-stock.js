@@ -1,4 +1,5 @@
 import SatuDarahSource from '../../data/satu-darah-source';
+import { navigateTo } from '../../utils/navigate';
 import { stockFormCreator } from './template/template-creator';
 
 const CreateStock = {
@@ -90,6 +91,7 @@ const CreateStock = {
         // Handle successful creation of stock
         const createStockContainer = document.getElementById('create-stock');
         createStockContainer.innerHTML = '<p>Stock created successfully!</p>';
+        await navigateTo('/#/profile');
       } catch (error) {
         console.error('Failed to create stock:', error.message);
         // Handle error when creating stock

@@ -16,11 +16,9 @@ userRouter.delete('/api/users/logout', userController.logout);
 // event API
 userRouter.post('/api/events', eventController.create);
 userRouter.delete('/api/events/:eventId', eventController.deleteEvent);
-userRouter.get('/api/list/search', eventController.searchEvents);
 
 // Routes untuk BloodStock API
 userRouter.post('/api/blood-stocks', bloodStockController.create);
-userRouter.get('/api/blood-stocks/search', bloodStockController.search);
 userRouter.delete('/api/blood-stocks/:bloodstockId', bloodStockController.remove);
 userRouter.put('/api/blood-stocks/:bloodstockId', bloodStockController.update);
 

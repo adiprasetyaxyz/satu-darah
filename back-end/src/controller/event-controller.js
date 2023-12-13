@@ -19,9 +19,8 @@ const create = async (req, res, next) => {
 
 const get = async (req, res, next) => {
   try {
-    const { user } = req;
     const { eventId } = req.params;
-    const result = await eventService.get(user, eventId);
+    const result = await eventService.get(eventId);
     res.status(200).json({
       data: result,
     });
