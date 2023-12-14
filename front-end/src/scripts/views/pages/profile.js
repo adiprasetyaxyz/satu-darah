@@ -9,10 +9,11 @@ const Profile = {
     <div id="profile=container">  
     <div class="sidenav">
     <button id="profile-tab" style="display:none">Profile</button>  
-      <button id="events-tab" style="display:none">Events</button>
-      <button id="stocks-tab" style="display:none">Stocks</button>
-      <button id="registered-events-tab" style="display:none;">Event Anda</button>
+      <button id="events-tab" style="display:none">Event Donor</button>
+      <button id="stocks-tab" style="display:none">Stock Darah</button>
+      <button id="registered-events-tab" style="display:none;">Event Terdaftar</button>
       </div>
+      <h3 id="profile-title"> Profile </h3>
       <div class="main">
         <div id="profile-event" style="display:none;"></div>
         <div id="profile-stock" style="display:none;"></div>
@@ -47,8 +48,17 @@ const Profile = {
     const eventsTab = document.getElementById('events-tab');
     const stocksTab = document.getElementById('stocks-tab');
     const profileTab = document.getElementById('profile-tab');
+    const profileTitle = document.getElementById('profile-title');
 
+    const setActiveTab = (tabElement) => {
+      const tabs = document.querySelectorAll('.sidenav button');
+      tabs.forEach((tab) => {
+        tab.classList.remove('active');
+      });
+      tabElement.classList.add('active');
+    };
     const displayEvents = async () => {
+      profileTitle.innerText = 'Kelola Event Anda';
       const users = await SatuDarahSource.getUser();
       const { username } = users;
       const events = await SatuDarahSource.getAllEvent();
@@ -83,6 +93,7 @@ const Profile = {
     };
 
     const displayStocks = async () => {
+      profileTitle.innerText = 'Kelola Stock Darah Anda';
       const users = await SatuDarahSource.getUser();
       const { username } = users;
       const bloodStocks = await SatuDarahSource.getAllstock();
@@ -128,6 +139,7 @@ const Profile = {
       document.getElementById('create-stock-container').style.display = 'block';
     };
     const displayProfile = async () => {
+      profileTitle.innerText = '';
       const user = await SatuDarahSource.getUser();
       userContainer.innerHTML = createGetUser(user);
       userContainer.style.display = 'block';
@@ -140,6 +152,7 @@ const Profile = {
     const registeredEventsTab = document.getElementById('registered-events-tab');
 
     const displayRegisteredEvents = async () => {
+      profileTitle.innerText = 'Event yang anda Ikuti';
       try {
         const user = await SatuDarahSource.getUser();
         const { username } = user;
@@ -179,16 +192,20 @@ const Profile = {
 
     eventsTab.addEventListener('click', () => {
       displayEvents();
+      setActiveTab(eventsTab);
     });
     registeredEventsTab.addEventListener('click', () => {
       displayRegisteredEvents();
+      setActiveTab(registeredEventsTab);
     });
     stocksTab.addEventListener('click', () => {
       displayStocks();
+      setActiveTab(stocksTab);
     });
 
     profileTab.addEventListener('click', () => {
       displayProfile();
+      setActiveTab(profileTab);
     });
 
     // Menampilkan tab sesuai dengan tipe akun
@@ -200,7 +217,7 @@ const Profile = {
       stocksTab.style.display = 'block';
       profileTab.style.display = 'block';
     }
-
+    setActiveTab(profileTab);
     displayProfile(); // Menampilkan tab Events secara default saat halaman terbuka
   },
 };

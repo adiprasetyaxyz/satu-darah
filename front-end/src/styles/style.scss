@@ -588,7 +588,19 @@ p {
   cursor: pointer;
 
 }
-
+.sidenav button.active {
+  background-color: red; /* Atur warna merah yang diinginkan */
+  /* Tambahkan gaya tambahan sesuai kebutuhan */
+}
+/* Gaya untuk link yang aktif */
+.app-bar__navigation > ul > li > a > .active {
+  color: red; /* Atur warna merah untuk link yang aktif */
+  /* Gaya lain yang diinginkan untuk link yang aktif */
+}
+#profile-title{
+  padding: 20px;
+  text-align: center;
+}
 /* Isi dropdown */
 .dropdown-content {
   display: none;
@@ -754,7 +766,7 @@ h2 {
 
 .aboutUs,
 .tujuan {
-  background-color: #f5f5f5;
+  background-color: $pink;
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 30px;
@@ -779,6 +791,7 @@ h2 {
 
 .icon:hover {
   transform: translateY(-5px);
+  background-color: $pink;
 }
 
 .fa-user-circle {
@@ -946,8 +959,6 @@ background-color: $red;
 text-align: start;
 padding: 20px;
 margin-top: 50px;
-border-color: #333;
-border-style: solid;
 }
 
 /* User Image Styles */

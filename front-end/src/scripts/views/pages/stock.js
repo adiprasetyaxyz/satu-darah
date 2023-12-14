@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable no-plusplus */
 import SatuDarahSource from '../../data/satu-darah-source';
 import ProvinceList from '../../utils/province-list';
@@ -62,7 +63,7 @@ const Stock = {
     };
 
     const updateStockAndPages = async (searchedEvents) => {
-      filteredStocks = searchedEvents.bloodStock || []; // Menyimpan hasil pencarian ke dalam filteredStocks
+      filteredStocks = searchedEvents.bloodStock || [];
       currentPage = 1;
       displayBloodStocks(currentPage);
       displayPageNumbers();
