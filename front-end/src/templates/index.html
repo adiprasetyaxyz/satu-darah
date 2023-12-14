@@ -16,7 +16,7 @@ crossorigin="anonymous">
             <button id="hamburgerButton">☰</button>
         </div>
         <div class="app-bar__brand">
-            <h1>Darah</h1>
+            <h1>1Darah</h1>
         </div>
         <nav id="navigationDrawer" class="app-bar__navigation">
             <ul>
@@ -26,11 +26,12 @@ crossorigin="anonymous">
                 <li><a href="#/about-us">About Us</a></li>
             </ul>
         </nav>
+        <div id="menu-container">
         <div class="button-container" id="loginButtonContainer">
-            <a class="button" href="#/login"><button class="button">Login</button></a>
+            <a class="button" href="#/login"><button class="buttons">Login</button></a>
         </div>
         <div class="dropdown" id="notificationContainer" style="display: none;">
-            <h4><i class="fa-solid fa-bell" style="font-size: 2em;"></i></h4>
+            <h4><i class="fa-solid fa-bell" style="color: #ffae00;"></i></i></h4>
             <div id="notif-content" class="dropdown-content">
                 <!-- Tautan notifikasi -->
                 <a href="#">Notification 1</a>
@@ -39,14 +40,14 @@ crossorigin="anonymous">
             </div>
         </div>
         <div class="dropdown" id="dropdownContainer" style="display: none;">
-            <h4 id="username-corner">Username</h4>
-            <button class="dropbtn"><i class="fa-solid fa-circle-user" style="font-size: 2em;"></i></button>
+            <button class="dropbtn"><i class="fa-solid fa-circle-user"></i></button>
             <div class="dropdown-content">
                 <a href="#/profile">Profile</a>
-                <a href="#/settings">Settings</a>
                 <a href="#logout">Logout</a>
             </div>
         </div>
+        <h4 id="username-corner"></h4>
+    </div>
     </header>
     <div id="loading" style="display: none;">
         Loading... <!-- Anda bisa menambahkan gambar loading atau elemen lainnya di sini -->
@@ -54,4 +55,8 @@ crossorigin="anonymous">
     <div id="mainContent"></div>
     <script src="https://kit.fontawesome.com/0112f5dde7.js" crossorigin="anonymous"></script>
 </body>
+<footer>
+        <p>&copy; 2023 Satu Darah | All Rights Reserved</p>
+        <p>Designed by <a href="https://github.com/adiprasetyaxyz" target="_blank" rel="noopener noreferrer">Adi Prasetyawan</a></p>
+</footer>
 </html>

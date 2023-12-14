@@ -6,18 +6,20 @@ import {
 const Profile = {
   async render() {
     return `
-      <div class="sidenav">
+    <div id="profile=container">  
+    <div class="sidenav">
+    <button id="profile-tab" style="display:none">Profile</button>  
       <button id="events-tab" style="display:none">Events</button>
       <button id="stocks-tab" style="display:none">Stocks</button>
-      <button id="profile-tab" style="display:none">Profile</button>  
       <button id="registered-events-tab" style="display:none;">Event Anda</button>
       </div>
       <div class="main">
-        <h2 id="profile-page" class="profile-page">Profile</h2>
         <div id="profile-event" style="display:none;"></div>
         <div id="profile-stock" style="display:none;"></div>
         <div id="profile-user" style="display:none;"></div>
-        <div id="profile-registered-event" style="display:none;"></div>
+        <div id="profile-registered-event" style="display:none;">
+        
+        </div>
         <div>
           <div id="create-event-container" style="display: none;">
             <button id="create-btn">Buat Event</button>
@@ -27,6 +29,7 @@ const Profile = {
             <button id="update-btn-stock">Ubah Stock Darah</button>
           </div>
         </div>
+      </div>
       </div>
     `;
   },
@@ -51,13 +54,13 @@ const Profile = {
       const events = await SatuDarahSource.getAllEvent();
       const filteredEvents = events.filter((event) => event.username === username);
       eventContainer.innerHTML = '';
+      createBtn.addEventListener('click', () => {
+        window.location.href = '#/create-event';
+      });
 
       filteredEvents.forEach((event) => {
         eventContainer.innerHTML += createMyEventList(event);
         const deleteBtn = document.getElementById(`delete-event-${event.id}`);
-        createBtn.addEventListener('click', () => {
-          window.location.href = '#/create-event';
-        });
 
         if (deleteBtn) {
           deleteBtn.addEventListener('click', async () => {

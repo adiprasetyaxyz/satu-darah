@@ -1,4 +1,5 @@
 import '../styles/style.scss';
+import '../styles/responsive.scss';
 import loginUsername from './utils/login-username';
 import logout from './utils/logout';
 import notif from './utils/notif';

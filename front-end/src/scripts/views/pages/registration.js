@@ -4,22 +4,30 @@ import { navigateTo } from '../../utils/navigate';
 const Registration = {
   async render() {
     return `
-    <h2>Registration Form</h2>
-    <form id="registration-form">
-      <label for="username">Username:</label><br>
-      <input type="text" id="username" name="username" required><br><br>
-      <label for="password">Password:</label><br>
-      <input type="password" id="password" name="password" required><br><br>
-      <label for="name">Name:</label><br>
-      <input type="text" id="name" name="name" required><br><br>
-      <label for="accountType">Account Type:</label><br>
-      <select id="accountType" name="accountType" required>
-      <option value="User">User</option>
-        <option value="Provider">Provider</option>
-      </select><br><br>
-      <input type="submit" value="Register">
-      <button id="login" onclick="location.href='#/login'">Login</button>
-    </form>
+    <div id="register-container">
+    <div class="section-form">
+      <div class="section-image">
+        <img src="./images/images4.png" alt="register-image" id="register-image">
+      </div>
+      <form id="registration-form">
+      <div id="message"></div>
+        <label for="username">Username:</label><br>
+        <input type="text" id="reg-username" name="username" required><br><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="reg-password" name="password" required><br><br>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="accountType">Account Type:</label><br>
+        <select id="accountType" name="accountType" required>
+          <option value="User">User</option>
+          <option value="Provider">Provider</option>
+        </select><br><br>
+        <input type="submit" value="Register">
+        <p>Sudah punya akun? <a onclick="location.href='#/login'" style="color: blue">Login</a> sekarang</p>
+      </form>
+    </div>
+  </div>
+  
     
       `;
   },
@@ -49,7 +57,8 @@ const Registration = {
         navigateTo('/#/login');
         console.log(data); // Data respons dari server, jika diperlukan
       } catch (error) {
-        alert(error.message);
+        const messageContainer = document.getElementById('message');
+        messageContainer.innerText = error.message;
       }
     });
   },

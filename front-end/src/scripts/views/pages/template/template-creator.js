@@ -39,7 +39,7 @@ const createEventList = (event) => {
               </tr>
             </table>
           </div>
-          <button id="daftar-${event.id}">Daftar Event</button>
+          <button onclick="location.href='#/event';" id="daftar-${event.id}" class="buttons">Daftar Event</button>
         </div>
       </div>
     `;
@@ -85,15 +85,21 @@ const createMyEventList = (event) => {
               </tr>
             </table>
           </div>
-          <button id="delete-event-${event.id}" class="delete-btn">Delete Event</button>
-          <button id="update-event">Ubah Event</button>
+          <button id="delete-event-${event.id}" class="buttons">Delete Event</button>
         </div>
       </div>
     `;
 };
 
-const createGetUser = (event) => `
-  <h3>Selamat Datang, ${event.name}</h3>
+const createGetUser = (user) => `
+<div id="text-container">
+<div class="img-user"><i class="fa-solid fa-circle-user" style="font-size: 5rem"></i></div>
+<div id="container">
+  <h3>Nama : ${user.name}</h3>
+  <h3>Username : ${user.username}</h3>
+  <h3>Jenis Akun : ${user.accountType}</h3>
+  </div>
+  </div>
   `;
 const createEvent = () => {
   const username = localStorage.getItem('username') || '';
@@ -178,10 +184,6 @@ const stockFormCreator = () => `  <h2>Formulir Stok Darah</h2>
   <br>
   <table>
   <tr>
-    <td>Username</td>
-    <td><input type="text" id="username" name="username"></td>
-  </tr>
-  <tr>
     <td>Provider Name</td>
     <td><input type="text" id="providerName" name="providerName"></td>
   </tr>
@@ -202,7 +204,9 @@ const stockFormCreator = () => `  <h2>Formulir Stok Darah</h2>
   <input type="submit" value="Submit">
 </form>`;
 const createBloodStock = (bloodStock) => `
-<table>
+<div class="table-container">
+<div class="card">
+<table class="blood-stock-table">
   <tr>
     <td>Komposisi</td>
     <td>Gol A</td>
@@ -246,16 +250,9 @@ const createBloodStock = (bloodStock) => `
     <td>${bloodStock.leucodepleted ? bloodStock.leucodepleted.AB : '0'}</td>
   </tr>
 </table>
-
-<table>
-<tr>
-  <td>Username</td>
-  <td>${bloodStock.username}</td>
-</tr>
-  <tr>
-    <th>Field</th>
-    <th>Data</th>
-  </tr>
+</div>
+<div class="card">
+<table class="user-details-table">
   <tr>
     <td>ID</td>
     <td>${bloodStock.id}</td>
@@ -277,10 +274,14 @@ const createBloodStock = (bloodStock) => `
     <td>${bloodStock.phoneNumber}</td>
   </tr>
   </table>
-  <button id="request" class="requestBtn">Request Stock Darah</button>
+  <button id="request" class="buttons">Request Stock Darah</button>
+  </div>
+  </div>
 `;
 const createMyBloodStock = (bloodStock) => `
-<table>
+<div class="table-container">
+<div class="card">
+<table class="blood-stock-table">
   <tr>
     <td>Komposisi</td>
     <td>Gol A</td>
@@ -324,16 +325,9 @@ const createMyBloodStock = (bloodStock) => `
     <td>${bloodStock.leucodepleted ? bloodStock.leucodepleted.AB : '0'}</td>
   </tr>
 </table>
-
-<table>
-<tr>
-  <td>Username</td>
-  <td>${bloodStock.username}</td>
-</tr>
-  <tr>
-    <th>Field</th>
-    <th>Data</th>
-  </tr>
+</div>
+<div class="card">
+<table class="user-details-table">
   <tr>
     <td>ID</td>
     <td>${bloodStock.id}</td>
@@ -355,7 +349,9 @@ const createMyBloodStock = (bloodStock) => `
     <td>${bloodStock.phoneNumber}</td>
   </tr>
   </table>
-  <button id="delete-stock-${bloodStock.id}" class="delete-btn">Delete Event</button>
+  <button id="delete-stock-${bloodStock.id}" class="buttons">Hapus Stock</button>
+  </div>
+  </div>
 
 `;
 

@@ -4,19 +4,27 @@ import { navigateTo } from '../../utils/navigate';
 const Login = {
   async render() {
     return `
-          <h2>Login Form</h2>
+    <div id="login-container">
+    <div class="section-form">
+    <div class="section-image">
+    <img src="./images/images4.png" alt="login-image" id="login-image">
+    </div>
           <form id="login-form">
+          <div id="message"></div>
             <label for="username">Username:</label><br>
             <input type="text" id="username" name="username" required><br><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" name="password" required><br><br>
-            <input type="submit" value="Login">
-            <button id="daftar" onclick="location.href='#/register'">Buat Akun</button>
+            <input type="submit" value="Masuk">
+            <p>Belum punya akun? <a onclick="location.href='#/register'" style="color: blue">Buat Akun</a> sekarang</p>
           </form>
+          </div>
+          </div>
         `;
   },
 
   async afterRender() {
+    // eslint-disable-next-line func-names
     document.getElementById('login-form').addEventListener('submit', async function (event) {
       event.preventDefault();
 
@@ -38,7 +46,6 @@ const Login = {
 
         const data = await response.json();
         alert('Login successful!');
-        console.log(data); // Data respons dari server, jika diperlukan
         // eslint-disable-next-line prefer-destructuring
         const token = data.data.token;
         const { username } = data.data;
@@ -52,7 +59,8 @@ const Login = {
           window.location.reload();
         }
       } catch (error) {
-        alert(error.message);
+        const messageContainer = document.getElementById('message');
+        messageContainer.innerText = error.message;
       }
     });
   },

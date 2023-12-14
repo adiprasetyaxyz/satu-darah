@@ -6,8 +6,9 @@ const CreateEvent = {
   async render() {
     return `
     <div id="create-notif"></div>
+    <div id="create-container">
     <div id="create-event"></div>
-    
+    <div>
       `;
   },
 
