@@ -69,14 +69,16 @@ body {
   left: -100%;
   width: 100%;
   transition: all 0.3s;
-  padding: 8px 15px;
   background-color: white;
   overflow: hidden;
   z-index: 0;
+  padding-top: 14px;
 }
  
 .app-bar .app-bar__navigation.open {
+  padding-left: 25px;
   left: 0;
+  z-index: -1;
 }
 
 #message {
@@ -759,6 +761,7 @@ p {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding-bottom: 16px;
 }
 /* Container styling */
 #about-container {

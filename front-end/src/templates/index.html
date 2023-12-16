@@ -23,7 +23,7 @@
         <nav id="navigationDrawer" class="app-bar__navigation">
             <ul>
                 <li><a href="#/home" class="active">Home</a></li>
-                <li><a href="#/event">Event</a></li>
+                <li id="eventListItem"><a href="#/event">Event</a></li>
                 <li><a href="#/stock-darah">Stock Darah</a></li>
                 <li><a href="#/about-us">About Us</a></li>
             </ul>
@@ -63,6 +63,15 @@
       </div>
     <div id="mainContent"></div>
     <script src="https://kit.fontawesome.com/0112f5dde7.js" crossorigin="anonymous"></script>
+    <script>
+        function redirectToEvent() {
+            const eventListItem = document.getElementById('eventListItem');
+            const Tag = eventListItem.querySelector('a');
+            if (Tag) {
+                Tag.click();
+            }
+        }
+    </script>
 </body>
 <footer>
         <p>&copy; 2023 Satu Darah | All Rights Reserved</p>
