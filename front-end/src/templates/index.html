@@ -24,7 +24,7 @@
             <ul>
                 <li><a href="#/home" class="active">Home</a></li>
                 <li id="eventListItem"><a href="#/event">Event</a></li>
-                <li><a href="#/stock-darah">Stock Darah</a></li>
+                <li id="eventList"><a href="#/stock-darah">Stock Darah</a></li>
                 <li><a href="#/about-us">About Us</a></li>
             </ul>
         </nav>
@@ -69,6 +69,13 @@
             const Tag = eventListItem.querySelector('a');
             if (Tag) {
                 Tag.click();
+            }
+        }
+        function redirectToAboutUs() {
+            const eventList = document.getElementById('eventList');
+            const clicka = eventList.querySelector('a');
+            if (clicka) {
+                clicka.click();
             }
         }
     </script>
