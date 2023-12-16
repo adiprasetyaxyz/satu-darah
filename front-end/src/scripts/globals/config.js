@@ -1,6 +1,6 @@
 const CONFIG = {
   KEY: 'YOUR_API_KEY',
-  BASE_URL: 'http://localhost:3000/',
+  BASE_URL: 'https://determined-red-flip-flops.cyclic.app/',
   BASE_IMAGE_URL: '',
   DEFAULT_LANGUAGE: 'en-us',
 };
