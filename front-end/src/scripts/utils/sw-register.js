@@ -5,7 +5,10 @@ const swRegister = async () => {
     console.log('Service Worker not supported in the browser');
     return;
   }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   const wb = new Workbox('./sw.bundle.js');
 
   try {
@@ -16,4 +19,9 @@ const swRegister = async () => {
   }
 };
 
+<<<<<<< Updated upstream
 export default swRegister;
+=======
+// eslint-disable-next-line eol-last
+export default swRegister;
+>>>>>>> Stashed changes

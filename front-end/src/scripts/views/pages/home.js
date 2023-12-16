@@ -12,9 +12,13 @@ const Home = {
       <div id="hero-text">
         <h1>Satu Darah</h1>
         <p>Menyediakan informasi seputar stok darah dari berbagai lokasi</p>
+<<<<<<< Updated upstream
         <button onclick="location.href='#/stock-darah';">Cari Stock Darah</button>
         </div>
     </div>
+=======
+        <button>About Us</button>
+>>>>>>> Stashed changes
     </div>
 <h2>Event Terbaru</h2>
 <div id="show-event"></div>
