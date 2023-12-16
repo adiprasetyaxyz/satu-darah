@@ -324,8 +324,7 @@ const createBloodStock = (bloodStock) => `
     <td>${bloodStock.phoneNumber}</td>
   </tr>
   </table>
-  <button id="request" class="buttons">Request Stock Darah</button>
-  </div>
+  <button id="request" class="buttons" onclick="window.location.href='https://api.whatsapp.com/send?phone=62${bloodStock.phoneNumber}'">Request Stock Darah</button>
   </div>
 `;
 const createMyBloodStock = (bloodStock) => `

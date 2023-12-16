@@ -39,6 +39,7 @@ const Registration = {
 
   async afterRender() {
     window.scrollTo(0, 0); // Geser ke bagian atas halaman
+    // eslint-disable-next-line func-names
     document.getElementById('registration-form').addEventListener('submit', async function (event) {
       event.preventDefault();
 
