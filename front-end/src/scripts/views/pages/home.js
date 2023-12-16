@@ -22,7 +22,7 @@ const Home = {
     </div>
 <h2>Event Terbaru</h2>
 <div id="show-event"></div>
-<button onclick="location.href='#/event';" class="buttons" style="width: 200px;">Lihat lebih Banyak</button>
+<button onclick="redirectToEvent();" class="buttons" style="width: 200px;">Lihat lebih Banyak</button>
     </div>
 
     <div id="syarat-donor">

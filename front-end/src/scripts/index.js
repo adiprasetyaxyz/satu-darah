@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import '../styles/style.scss';
 import '../styles/responsive.scss';
 import 'lazysizes';
@@ -5,7 +6,6 @@ import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import loginUsername from './utils/login-username';
 import logout from './utils/logout';
 import notif from './utils/notif';
-// eslint-disable-next-line import/no-unresolved
 import App from './views/app';
 import swRegister from './utils/sw-register';
 
