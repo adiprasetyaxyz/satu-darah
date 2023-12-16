@@ -23,6 +23,8 @@ const Event = {
   },
 
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
+
     ProvinceList();
     const events = await SatuDarahSource.getAllEvent();
     const eventContainer = document.getElementById('show-event');

@@ -24,13 +24,14 @@ const Stock = {
   },
 
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
     ProvinceList();
     const bloodStockContainer = document.getElementById('blood-stock');
     const prevPageButton = document.getElementById('prev-page');
     const nextPageButton = document.getElementById('next-page');
     const pageNumberContainer = document.getElementById('page-numbers');
 
-    const pageSize = 5;
+    const pageSize = 4;
     let currentPage = 1;
     let filteredStocks = []; // Menyimpan stok darah yang sudah difilter
 

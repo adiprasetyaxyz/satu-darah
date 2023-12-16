@@ -5,7 +5,7 @@ const createEventList = (event) => {
   return `
 
       <div class="event-wrapper">
-        <div class="poster"><img src="./images/poster/image 1.png" alt="poster"></div>
+        <div class="poster"><img class="lazyload" data-src="./images/poster/image 1.png" alt="poster"></div>
         <div class="card-event">
           <div class="event-info">
             <table>
@@ -44,14 +44,14 @@ const createEventList = (event) => {
       </div>
     `;
 };
-const createMyEventList = (event) => {
+const createRegisteredEventList = (event) => {
   const eventDate = new Date(event.date);
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
   const formattedDate = eventDate.toLocaleDateString('id-ID', options);
   return `
 
       <div class="event-wrapper">
-        <div class="poster"><img src="./images/poster/image 1.png" alt="poster"></div>
+        <div class="poster"><img class="lazyload" data-src="./images/poster/image 1.png" alt="poster"></div>
         <div class="card-event">
           <div class="event-info">
             <table>
@@ -85,8 +85,58 @@ const createMyEventList = (event) => {
               </tr>
             </table>
           </div>
+          <button onclick="location.href='#/event';" id="daftar-${event.id}" class="buttons">Lihat Event Lainnya</button>
+        </div>
+      </div>
+    `;
+};
+const createMyEventList = (event) => {
+  const eventDate = new Date(event.date);
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  const formattedDate = eventDate.toLocaleDateString('id-ID', options);
+  return `
+
+      <div class="event-wrapper">
+        <div class="poster"><img class="lazyload" data-src="./images/poster/image 1.png" alt="poster"></div>
+        <div class="card-event">
+          <div class="event-info">
+            <table>
+              <tr>
+                <td>Penyelenggara:</td>
+                <td> : ${event.bloodProvider}</td>
+              </tr>
+              <tr>
+                <td>Wilayah</td>
+                <td> : ${event.region}</td>
+              </tr>
+              <tr>
+                <td>Tanggal</td>
+                <td> : ${formattedDate}</td>
+              </tr>
+              <tr>
+                <td>Waktu</td>
+                <td> : ${event.time}</td>
+              </tr>
+              <tr>
+                <td>Tempat</td>
+                <td> : ${event.location}</td>
+              </tr>
+              <tr>
+                <td>Kapasitas</td>
+                <td> : ${event.capacity}</td>
+              </tr>
+              <tr>
+                <td>Terdaftar</td>
+                <td id="registered-${event.id}"> : ${event.registered}</td>
+              </tr>
+            </table>
+          </div>
           <button id="delete-event-${event.id}" class="buttons">Delete Event</button>
         </div>
+        <div>
+       <p>Orang yang mendaftar Event</p>
+        <div class="account-container" id="account-${event.id}"></div>
+      </div>
       </div>
     `;
 };
@@ -378,5 +428,6 @@ export {
   createBloodStock,
   createMyBloodStock,
   createMyEventList,
+  createRegisteredEventList,
   createRegisterForm,
 };

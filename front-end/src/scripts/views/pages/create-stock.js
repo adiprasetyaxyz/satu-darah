@@ -1,16 +1,24 @@
 import SatuDarahSource from '../../data/satu-darah-source';
+import showModal from '../../utils/modal';
 import { navigateTo } from '../../utils/navigate';
 import { stockFormCreator } from './template/template-creator';
 
 const CreateStock = {
   async render() {
     return `
+    <div class="modal" id="successModal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <p id="message">Berhasil Login!</p>
+    </div>
+  </div>
     <div id="create-stock"></div>
     <div id="stock-container"></div>
     `;
   },
 
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
     const stockContainer = document.getElementById('create-stock');
     stockContainer.innerHTML += stockFormCreator();
     const users = await SatuDarahSource.getUser();
@@ -89,15 +97,12 @@ const CreateStock = {
         console.log('Stock created:', createdStock);
 
         // Handle successful creation of stock
-        const createStockContainer = document.getElementById('create-stock');
-        createStockContainer.innerHTML = '<p>Stock created successfully!</p>';
-        await navigateTo('/#/profile');
+        showModal('Stock Darah berhasil dibuat!');
+        setTimeout(() => {
+          navigateTo('/#/profile');
+        }, 1000);
       } catch (error) {
-        console.error('Failed to create stock:', error.message);
-        // Handle error when creating stock
-
-        const createStockContainer = document.getElementById('create-stock');
-        createStockContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+        showModal(error);
       }
     });
   },

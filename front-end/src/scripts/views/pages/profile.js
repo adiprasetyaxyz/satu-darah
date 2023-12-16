@@ -1,12 +1,20 @@
 import SatuDarahSource from '../../data/satu-darah-source';
+import showModal from '../../utils/modal';
 import {
-  createEventList, createGetUser, createMyBloodStock, createMyEventList,
+  createGetUser, createMyBloodStock, createMyEventList, createRegisteredEventList,
 } from './template/template-creator';
 
 const Profile = {
   async render() {
     return `
     <div id="profile=container">  
+    <div class="modal" id="successModal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <p id="message">Berhasil Login!</p>
+    </div>
+  </div>
+
     <div class="sidenav">
     <button id="profile-tab" style="display:none">Profile</button>  
       <button id="events-tab" style="display:none">Event Donor</button>
@@ -35,9 +43,9 @@ const Profile = {
     `;
   },
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
     const userType = await SatuDarahSource.getUser();
     const { accountType } = userType;
-    console.log(accountType);
     const eventContainer = document.getElementById('profile-event');
     const registeredContainer = document.getElementById('profile-registered-event');
     const stockContainer = document.getElementById('profile-stock');
@@ -67,19 +75,27 @@ const Profile = {
       createBtn.addEventListener('click', () => {
         window.location.href = '#/create-event';
       });
-
-      filteredEvents.forEach((event) => {
+      filteredEvents.forEach(async (event) => {
         eventContainer.innerHTML += createMyEventList(event);
+        const registerEvents = await SatuDarahSource.getAllRegisterEvent();
+        // eslint-disable-next-line max-len
+        const filteredRegisterEvents = registerEvents.data.filter((registeredEvent) => registeredEvent.eventId === event.id);
+        const registeredCount = filteredRegisterEvents.length;
+        const registered = document.getElementById(`registered-${event.id}`);
+        registered.innerText = `: ${registeredCount}`;
+        filteredRegisterEvents.forEach((userRegistered) => {
+          const registeredAccountContainer = document.getElementById(`account-${event.id}`);
+          registeredAccountContainer.innerHTML += `<p>${userRegistered.username}</p>`;
+        });
         const deleteBtn = document.getElementById(`delete-event-${event.id}`);
 
         if (deleteBtn) {
           deleteBtn.addEventListener('click', async () => {
             try {
               await SatuDarahSource.deleteEvent(event.id);
-              console.log(`Event with ID ${event.id} deleted`);
               deleteBtn.parentNode.parentNode.remove();
             } catch (error) {
-              console.error(`Error deleting event: ${event.id}`, error.message);
+              showModal(error);
             }
           });
         }
@@ -123,10 +139,10 @@ const Profile = {
           deleteStockBtn.addEventListener('click', async () => {
             try {
               await SatuDarahSource.deleteBloodStock(bloodStock.id);
-              console.log(`Blood stock with ID ${bloodStock.id} deleted`);
-              deleteStockBtn.parentNode.remove();
+              deleteStockBtn.parentNode.parentNode.remove();
+              showModal('Stock berhasil dihapus!');
             } catch (error) {
-              console.error(`Error deleting blood stock: ${bloodStock.id}`, error.message);
+              showModal(error);
             }
           });
         }
@@ -167,8 +183,6 @@ const Profile = {
         const eventDetailsPromises = filteredEvents.map(async (registeredEvent) => {
           try {
             const eventDetails = await SatuDarahSource.getEvent(registeredEvent.eventId);
-            console.log(eventDetails.data);
-            console.log(registeredEvent.eventId);
             return eventDetails.data;
           } catch (error) {
             console.error('Error fetching event details:', error.message);
@@ -179,11 +193,10 @@ const Profile = {
         const eventDetailsArray = await Promise.all(eventDetailsPromises);
         eventDetailsArray.forEach((eventDetails) => {
           if (eventDetails) {
-            registeredContainer.innerHTML += createEventList(eventDetails);
+            registeredContainer.innerHTML += createRegisteredEventList(eventDetails);
           }
         });
 
-        console.log(filteredEvents);
         // ... (tindakan lain, seperti menambahkan event listener atau penyesuaian UI)
       } catch (error) {
         console.error('Error displaying registered events:', error.message);

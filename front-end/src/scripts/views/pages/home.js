@@ -7,7 +7,7 @@ const Home = {
     <div id="hero">
       <div id="gambarhero">
       <div id="img-container">
-      <img src="./images/images1.png" alt="Icon-satudarah" id="hero-image">
+      <img class="lazyload" data-src="./images/images1.png" alt="Icon-satudarah" id="hero-image">
       </div>
       <div id="hero-text">
         <h1>Satu Darah</h1>
@@ -43,7 +43,7 @@ const Home = {
     <div id="keuntungan-donor">
         <h2>Keuntungan Donor Darah</h2>
         <div class="keuntungan-container">
-            <img src="./images/images3.png" alt="">
+            <img class="lazyload" data-src="./images/images3.png" alt="">
             <div class="keuntungan-info">
                 <ul>
                     <li><h4>Menjaga kesehatan jantung</h4></li>
@@ -63,15 +63,14 @@ const Home = {
   },
 
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
     const events = await SatuDarahSource.getAllEvent();
-    console.log(events);
 
     // Mengambil dua acara terbaru dari array events
     const latestEvents = events.slice(0, 2);
 
     const eventContainer = document.getElementById('show-event');
     latestEvents.forEach((event) => {
-      console.log(`test${event}`);
       eventContainer.innerHTML += createEventList(event);
     });
   },

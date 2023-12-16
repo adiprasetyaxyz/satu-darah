@@ -10,6 +10,7 @@ $hover: #830f00;
 /*
   AppBar
 */
+
 p {
   font-size: small;
 }
@@ -54,7 +55,12 @@ body {
   font-size: 16px;
   user-select: none;
 }
- 
+#loginBNuttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
 .app-bar .app-bar__navigation {
   display: flex;
   justify-content: start;
@@ -140,7 +146,7 @@ body {
   list-style: none;
   text-decoration: none;
   display: block;
-  margin: 0 auto;
+  margin: auto;
   padding: 10px 20px;
   background-color: #db0000; /* Warna latar belakang tombol */
   color: #fff; /* Warna teks tombol */
@@ -390,8 +396,8 @@ p {
   }
   .event-info {
     table {
-      font-size: small;
-      background-color: $pink;
+      font-size: smaller;
+      background-color: #ebebeb;
        tr:nth-child(even) td {
         background-color: #ffffff;
       }
@@ -593,7 +599,11 @@ p {
   /* Tambahkan gaya tambahan sesuai kebutuhan */
 }
 /* Gaya untuk link yang aktif */
-.app-bar__navigation > ul > li > a > .active {
+.app-bar__navigation > ul > li > a.active {
+  color: red; /* Atur warna merah untuk link yang aktif */
+  /* Gaya lain yang diinginkan untuk link yang aktif */
+}
+.app-bar__navigation > ul > li > a:hover {
   color: red; /* Atur warna merah untuk link yang aktif */
   /* Gaya lain yang diinginkan untuk link yang aktif */
 }
@@ -658,10 +668,12 @@ p {
   border: 1px solid #ddd;
 }
 
-.blood-stock-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+.blood-stock-table tr:nth-child(odd) {
+  background-color: #ebebeb;
 }
-
+.blood-stock-table tr:first-child {
+  background-color: $pink;
+}
 /* Gaya untuk tabel kedua */
 .user-details-table {
   width: 100%;
@@ -681,8 +693,8 @@ p {
   border: 1px solid #ddd;
 }
 
-.user-details-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+.user-details-table tr:nth-child(odd) {
+  background-color: #ebebeb;
 }
 
 #blood-stock {
@@ -1140,4 +1152,95 @@ footer a:hover {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.modal {
+  display: none; /* Modal defaultnya tersembunyi */
+  position: fixed; /* Modal ditempatkan secara tetap (terkunci) */
+  z-index: 1; /* Jaminan modal berada di atas konten lain */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Aktifkan scrolling jika diperlukan */
+  background-color: rgba(0, 0, 0, 0.4); /* Warna latar belakang semi-transparan */
+}
+
+/* Konten modal */
+.modal-content {
+  p {
+    padding: 20px 0;
+  }
+  border-radius: 20px;
+  background-color: #fefefe;
+  margin: 20% auto; /* Atur jarak atas dan bawah sesuai kebutuhan */
+  padding: 40px;
+  border: 1px solid #888;
+  width: 300px; /* Atur lebar sesuai kebutuhan */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+/* Tombol close di sudut kanan atas */
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 10px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Tombol Ya dan Tidak */
+#confirmLogout {
+  background-color: #00bd32;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#cancelLogout {
+  background-color: $red;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#confirmLogout:hover {
+background-color: #009728;
+}
+#cancelLogout:hover {
+  background-color: $hover;
+}
+
+.account-container {
+  width: 200px;
+  padding: 20px; /* Padding 20px */
+  border: 1px solid #ddd; /* Border 1px solid dan warna abu-abu */
+  border-radius: 8px; /* Border radius 8px */
+  background-color: #fff; /* Warna latar belakang putih */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow halus */
+  height: 200px;
+  overflow: scroll;
 }

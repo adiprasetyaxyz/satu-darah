@@ -4,13 +4,18 @@ import { navigateTo } from '../../utils/navigate';
 const Registration = {
   async render() {
     return `
+    <div class="modal" id="successModal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <p id="message">Akun Berhasil dibuat!</p>
+    </div>
+  </div>
     <div id="register-container">
     <div class="section-form">
       <div class="section-image">
-        <img src="./images/images4.png" alt="register-image" id="register-image">
+        <img class="lazyload" data-src="./images/images4.png" alt="register-image" id="register-image">
       </div>
       <form id="registration-form">
-      <div id="message"></div>
         <label for="username">Username:</label><br>
         <input type="text" id="reg-username" name="username" required><br><br>
         <label for="password">Password:</label><br>
@@ -33,6 +38,7 @@ const Registration = {
   },
 
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
     document.getElementById('registration-form').addEventListener('submit', async function (event) {
       event.preventDefault();
 
@@ -52,13 +58,29 @@ const Registration = {
           throw new Error('Username already registered');
         }
 
-        const data = await response.json();
-        alert('User registered successfully!');
-        navigateTo('/#/login');
-        console.log(data); // Data respons dari server, jika diperlukan
+        await response.json();
+        setTimeout(() => {
+          navigateTo('/#/login');
+          window.location.reload();
+        }, 2000);
+        // Tampilkan modal setelah login berhasil
+        const successModal = document.getElementById('successModal');
+        successModal.style.display = 'block';
+
+        // Close modal when close button is clicked
+        const closeModal = document.getElementById('closeModal');
+        closeModal.addEventListener('click', () => {
+          successModal.style.display = 'none';
+        });
       } catch (error) {
         const messageContainer = document.getElementById('message');
+        const successModal = document.getElementById('successModal');
+        successModal.style.display = 'block';
         messageContainer.innerText = error.message;
+        const closeModal = document.getElementById('closeModal');
+        closeModal.addEventListener('click', () => {
+          successModal.style.display = 'none';
+        });
       }
     });
   },

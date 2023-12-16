@@ -1,10 +1,17 @@
 import SatuDarahSource from '../../data/satu-darah-source';
+import showModal from '../../utils/modal';
 import { navigateTo } from '../../utils/navigate';
 import { createEvent } from './template/template-creator';
 
 const CreateEvent = {
   async render() {
     return `
+    <div class="modal" id="successModal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <p id="message">Event berhasil dibuat!</p>
+    </div>
+  </div>
     <div id="create-notif"></div>
     <div id="create-container">
     <div id="create-event"></div>
@@ -13,8 +20,8 @@ const CreateEvent = {
   },
 
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
     const createEventContainer = document.getElementById('create-event');
-    const createNotif = document.getElementById('create-notif');
     createEventContainer.innerHTML += createEvent();
     const createForm = document.getElementById('create-form');
     createForm.addEventListener('submit', async (event) => {
@@ -28,16 +35,12 @@ const CreateEvent = {
         console.log('Event created:', createdEvent);
 
         // Lakukan navigasi atau tindakan lain setelah event berhasil dibuat
-
-        // Misalnya, tambahkan pesan ke halaman bahwa event berhasil dibuat
-        createNotif.innerHTML = '<p>Event created successfully!</p>';
-        await navigateTo('/#/profile');
+        showModal('Event berhasil dibuat');
+        setTimeout(() => {
+          navigateTo('/#/profile');
+        }, 500);
       } catch (error) {
-        console.error('Failed to create event:', error.message);
-        // Tangani kesalahan jika gagal membuat event
-
-        // Misalnya, tambahkan pesan kesalahan ke halaman
-        createNotif.innerHTML = `<p>Error: ${error.message}</p>`;
+        showModal(error);
       }
     });
   },

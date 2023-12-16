@@ -38,7 +38,7 @@ const About = {
   },
 
   async afterRender() {
-    // Fungsi ini akan dipanggil setelah render()
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
   },
 };
 
