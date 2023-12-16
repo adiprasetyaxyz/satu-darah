@@ -133,7 +133,7 @@ const createMyEventList = (event) => {
           </div>
           <button id="delete-event-${event.id}" class="buttons">Delete Event</button>
         </div>
-        <div>
+        <div class="registered-card">
        <p>Orang yang mendaftar Event</p>
         <div class="account-container" id="account-${event.id}"></div>
       </div>

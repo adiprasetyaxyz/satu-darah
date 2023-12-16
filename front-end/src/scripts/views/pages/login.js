@@ -21,7 +21,7 @@ const Login = {
             <input type="text" id="username" name="username" required><br><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" name="password" required><br><br>
-            <input type="submit" value="Masuk">
+            <input type="submit" value="Login">
             <p>Belum punya akun? <a onclick="location.href='#/register'" style="color: blue">Buat Akun</a> sekarang</p>
           </form>
           </div>

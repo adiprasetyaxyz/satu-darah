@@ -379,6 +379,7 @@ p {
     justify-content: center;
     align-items: start;
     gap: 20px;
+    margin-bottom: 25px;
   }
 
   .card-event, .card {
@@ -1242,5 +1243,13 @@ background-color: #009728;
   background-color: #fff; /* Warna latar belakang putih */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow halus */
   height: 200px;
-  overflow: scroll;
+  overflow-y: scroll;
+}
+
+.registered-card {
+  padding: 10px 0;
+  p {
+    padding: 5px;
+    text-align: center;
+  }
 }
