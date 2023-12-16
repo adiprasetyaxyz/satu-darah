@@ -29,7 +29,7 @@ body {
   z-index: 99;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
- 
+
 .app-bar .app-bar__menu {
   display: flex;
   align-items: center;
@@ -55,7 +55,7 @@ body {
   font-size: 16px;
   user-select: none;
 }
-#loginBNuttonContainer {
+#loginButtonContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,7 +91,7 @@ body {
   display: inline-block;
   text-decoration: none;
   color: black;
-  padding: 14px 2px;
+  padding-top: 20px;
   margin-bottom: 5px;
   width: 100%;
 }
@@ -759,6 +759,7 @@ p {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding-bottom: 20px;
 }
 /* Container styling */
 #about-container {
