@@ -7,20 +7,24 @@ const Event = {
   async render() {
     return `
       <h2 class="show-event">Events</h2>
+      <div id="dropdown-container">
+      <h3>Pilih Kota Anda</h3>
       <select id="province-dropdown">
       <option value="">Semua Provinsi</option>
     </select>
-    
+    </div>
       <div id="show-event"></div>
       <div id="pagination-buttons">
-        <button id="prev-page">Previous Page</button>
-        <button id="next-page">Next Page</button>
+        <button id="prev-page"><i class="fa-solid fa-chevron-left fa-sm" style="color: #ffffff;"></i></i></button>
+        <div id="page-numbers"></div>
+        <button id="next-page"><i class="fa-solid fa-chevron-right fa-sm" style="color: #ffffff;"></i></button>
       </div>
-      <div id="page-numbers"></div>
     `;
   },
 
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
+
     ProvinceList();
     const events = await SatuDarahSource.getAllEvent();
     const eventContainer = document.getElementById('show-event');

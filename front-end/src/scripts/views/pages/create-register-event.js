@@ -1,4 +1,5 @@
 import SatuDarahSource from '../../data/satu-darah-source';
+import showModal from '../../utils/modal';
 import { navigateTo } from '../../utils/navigate';
 import { createRegisterForm } from './template/template-creator';
 // Mendapatkan eventId dari URL
@@ -11,14 +12,20 @@ const getLastUrlSegment = () => {
 const CreateRegisterEvent = {
   async render() {
     return `
+    <div class="modal" id="successModal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <p id="message">Berhasil Login!</p>
+    </div>
+  </div>
         <div id="create-register-notif"></div>
         <div id="create-register-form"></div>
       `;
   },
 
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
     const createRegisterFormContainer = document.getElementById('create-register-form');
-    const createRegisterNotif = document.getElementById('create-register-notif');
     createRegisterFormContainer.innerHTML += createRegisterForm();
 
     const registerForm = document.getElementById('register-form');
@@ -31,13 +38,12 @@ const CreateRegisterEvent = {
       try {
         // Mendapatkan eventId dari URL terakhir
         const eventId = getLastUrlSegment();
-        console.log(eventId);
 
         // Pemeriksaan apakah pengguna sudah terdaftar untuk event tersebut
         const isRegistered = localStorage.getItem(`registeredForEvent_${eventId}`);
 
         if (isRegistered) {
-          createRegisterNotif.innerHTML = '<p>Anda sudah terdaftar untuk event ini!</p>';
+          showModal('Anda sudah terdaftar pada event ini!');
         } else {
           // Memasukkan eventId ke dalam data registrasi
 
@@ -49,17 +55,13 @@ const CreateRegisterEvent = {
           localStorage.setItem(`registeredForEvent_${eventId}`, 'true');
 
           // Tindakan setelah berhasil membuat registrasi
-
-          // Contoh, tampilkan pesan sukses pada halaman
-          createRegisterNotif.innerHTML = '<p>Registrasi berhasil dibuat!</p>';
-          navigateTo('/#/event'); // Navigasi ke halaman profil
+          showModal('Pendaftaran Berhasil!');
+          setTimeout(() => {
+            navigateTo('/#/event'); // Navigasi ke halaman profil
+          }, 1000);
         }
       } catch (error) {
-        console.error('Gagal membuat registrasi:', error.message);
-        // Tangani kesalahan jika gagal membuat registrasi
-
-        // Contoh, tampilkan pesan kesalahan pada halaman
-        createRegisterNotif.innerHTML = `<p>Error: ${error.message}</p>`;
+        showModal(error);
       }
     });
   },
