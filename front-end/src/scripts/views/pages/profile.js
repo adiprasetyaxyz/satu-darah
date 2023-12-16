@@ -1,23 +1,34 @@
 import SatuDarahSource from '../../data/satu-darah-source';
+import showModal from '../../utils/modal';
 import {
-  createEventList, createGetUser, createMyBloodStock, createMyEventList,
+  createGetUser, createMyBloodStock, createMyEventList, createRegisteredEventList,
 } from './template/template-creator';
 
 const Profile = {
   async render() {
     return `
-      <div class="sidenav">
-      <button id="events-tab" style="display:none">Events</button>
-      <button id="stocks-tab" style="display:none">Stocks</button>
-      <button id="profile-tab" style="display:none">Profile</button>  
-      <button id="registered-events-tab" style="display:none;">Event Anda</button>
+    <div id="profile=container">  
+    <div class="modal" id="successModal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <p id="message">Berhasil Login!</p>
+    </div>
+  </div>
+
+    <div class="sidenav">
+    <button id="profile-tab" style="display:none">Profile</button>  
+      <button id="events-tab" style="display:none">Event Donor</button>
+      <button id="stocks-tab" style="display:none">Stock Darah</button>
+      <button id="registered-events-tab" style="display:none;">Event Terdaftar</button>
       </div>
+      <h3 id="profile-title"> Profile </h3>
       <div class="main">
-        <h2 id="profile-page" class="profile-page">Profile</h2>
         <div id="profile-event" style="display:none;"></div>
         <div id="profile-stock" style="display:none;"></div>
         <div id="profile-user" style="display:none;"></div>
-        <div id="profile-registered-event" style="display:none;"></div>
+        <div id="profile-registered-event" style="display:none;">
+        
+        </div>
         <div>
           <div id="create-event-container" style="display: none;">
             <button id="create-btn">Buat Event</button>
@@ -28,12 +39,13 @@ const Profile = {
           </div>
         </div>
       </div>
+      </div>
     `;
   },
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
     const userType = await SatuDarahSource.getUser();
     const { accountType } = userType;
-    console.log(accountType);
     const eventContainer = document.getElementById('profile-event');
     const registeredContainer = document.getElementById('profile-registered-event');
     const stockContainer = document.getElementById('profile-stock');
@@ -44,29 +56,46 @@ const Profile = {
     const eventsTab = document.getElementById('events-tab');
     const stocksTab = document.getElementById('stocks-tab');
     const profileTab = document.getElementById('profile-tab');
+    const profileTitle = document.getElementById('profile-title');
 
+    const setActiveTab = (tabElement) => {
+      const tabs = document.querySelectorAll('.sidenav button');
+      tabs.forEach((tab) => {
+        tab.classList.remove('active');
+      });
+      tabElement.classList.add('active');
+    };
     const displayEvents = async () => {
+      profileTitle.innerText = 'Kelola Event Anda';
       const users = await SatuDarahSource.getUser();
       const { username } = users;
       const events = await SatuDarahSource.getAllEvent();
       const filteredEvents = events.filter((event) => event.username === username);
       eventContainer.innerHTML = '';
-
-      filteredEvents.forEach((event) => {
+      createBtn.addEventListener('click', () => {
+        window.location.href = '#/create-event';
+      });
+      filteredEvents.forEach(async (event) => {
         eventContainer.innerHTML += createMyEventList(event);
-        const deleteBtn = document.getElementById(`delete-event-${event.id}`);
-        createBtn.addEventListener('click', () => {
-          window.location.href = '#/create-event';
+        const registerEvents = await SatuDarahSource.getAllRegisterEvent();
+        // eslint-disable-next-line max-len
+        const filteredRegisterEvents = registerEvents.data.filter((registeredEvent) => registeredEvent.eventId === event.id);
+        const registeredCount = filteredRegisterEvents.length;
+        const registered = document.getElementById(`registered-${event.id}`);
+        registered.innerText = `: ${registeredCount}`;
+        filteredRegisterEvents.forEach((userRegistered) => {
+          const registeredAccountContainer = document.getElementById(`account-${event.id}`);
+          registeredAccountContainer.innerHTML += `<p>${userRegistered.username}</p>`;
         });
+        const deleteBtn = document.getElementById(`delete-event-${event.id}`);
 
         if (deleteBtn) {
           deleteBtn.addEventListener('click', async () => {
             try {
               await SatuDarahSource.deleteEvent(event.id);
-              console.log(`Event with ID ${event.id} deleted`);
               deleteBtn.parentNode.parentNode.remove();
             } catch (error) {
-              console.error(`Error deleting event: ${event.id}`, error.message);
+              showModal(error);
             }
           });
         }
@@ -80,6 +109,7 @@ const Profile = {
     };
 
     const displayStocks = async () => {
+      profileTitle.innerText = 'Kelola Stock Darah Anda';
       const users = await SatuDarahSource.getUser();
       const { username } = users;
       const bloodStocks = await SatuDarahSource.getAllstock();
@@ -109,10 +139,10 @@ const Profile = {
           deleteStockBtn.addEventListener('click', async () => {
             try {
               await SatuDarahSource.deleteBloodStock(bloodStock.id);
-              console.log(`Blood stock with ID ${bloodStock.id} deleted`);
-              deleteStockBtn.parentNode.remove();
+              deleteStockBtn.parentNode.parentNode.remove();
+              showModal('Stock berhasil dihapus!');
             } catch (error) {
-              console.error(`Error deleting blood stock: ${bloodStock.id}`, error.message);
+              showModal(error);
             }
           });
         }
@@ -125,6 +155,7 @@ const Profile = {
       document.getElementById('create-stock-container').style.display = 'block';
     };
     const displayProfile = async () => {
+      profileTitle.innerText = '';
       const user = await SatuDarahSource.getUser();
       userContainer.innerHTML = createGetUser(user);
       userContainer.style.display = 'block';
@@ -137,6 +168,7 @@ const Profile = {
     const registeredEventsTab = document.getElementById('registered-events-tab');
 
     const displayRegisteredEvents = async () => {
+      profileTitle.innerText = 'Event yang anda Ikuti';
       try {
         const user = await SatuDarahSource.getUser();
         const { username } = user;
@@ -151,8 +183,6 @@ const Profile = {
         const eventDetailsPromises = filteredEvents.map(async (registeredEvent) => {
           try {
             const eventDetails = await SatuDarahSource.getEvent(registeredEvent.eventId);
-            console.log(eventDetails.data);
-            console.log(registeredEvent.eventId);
             return eventDetails.data;
           } catch (error) {
             console.error('Error fetching event details:', error.message);
@@ -163,11 +193,10 @@ const Profile = {
         const eventDetailsArray = await Promise.all(eventDetailsPromises);
         eventDetailsArray.forEach((eventDetails) => {
           if (eventDetails) {
-            registeredContainer.innerHTML += createEventList(eventDetails);
+            registeredContainer.innerHTML += createRegisteredEventList(eventDetails);
           }
         });
 
-        console.log(filteredEvents);
         // ... (tindakan lain, seperti menambahkan event listener atau penyesuaian UI)
       } catch (error) {
         console.error('Error displaying registered events:', error.message);
@@ -176,16 +205,20 @@ const Profile = {
 
     eventsTab.addEventListener('click', () => {
       displayEvents();
+      setActiveTab(eventsTab);
     });
     registeredEventsTab.addEventListener('click', () => {
       displayRegisteredEvents();
+      setActiveTab(registeredEventsTab);
     });
     stocksTab.addEventListener('click', () => {
       displayStocks();
+      setActiveTab(stocksTab);
     });
 
     profileTab.addEventListener('click', () => {
       displayProfile();
+      setActiveTab(profileTab);
     });
 
     // Menampilkan tab sesuai dengan tipe akun
@@ -197,7 +230,7 @@ const Profile = {
       stocksTab.style.display = 'block';
       profileTab.style.display = 'block';
     }
-
+    setActiveTab(profileTab);
     displayProfile(); // Menampilkan tab Events secara default saat halaman terbuka
   },
 };

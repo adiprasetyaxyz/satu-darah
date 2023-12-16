@@ -8,6 +8,7 @@ class App {
     this._drawer = drawer;
     this._content = content;
 
+    this._updateNavigation();
     this._initialAppShell();
   }
 
@@ -18,7 +19,22 @@ class App {
       content: this._content,
     });
 
-    // kita bisa menginisiasikan komponen lain bila ada
+    // Mengambil semua elemen anchor di dalam navigasi
+    const navLinks = document.querySelectorAll('.app-bar__navigation > ul > li > a');
+
+    navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        navLinks.forEach((navLink) => {
+          navLink.classList.remove('active');
+        });
+        link.classList.add('active');
+      });
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  _updateNavigation() {
+    // Dapat juga ditempatkan di sini jika diperlukan untuk perbaruan berbasis state atau URL
   }
 
   async renderPage() {
@@ -26,6 +42,8 @@ class App {
     const page = routes[url];
     this._content.innerHTML = await page.render();
     await page.afterRender();
+
+    // Tambahkan kembali logika untuk menandai navigasi yang aktif di sini jika diperlukan
   }
 }
 

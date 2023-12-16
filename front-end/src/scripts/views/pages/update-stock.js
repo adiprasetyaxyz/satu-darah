@@ -1,18 +1,26 @@
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import SatuDarahSource from '../../data/satu-darah-source';
+import showModal from '../../utils/modal';
 import { navigateTo } from '../../utils/navigate';
 import { stockFormCreator } from './template/template-creator';
 
 const UpdateStock = {
   async render() {
     return `
+    <div class="modal" id="successModal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <p id="message">Berhasil Login!</p>
+    </div>
+  </div>
       <div id="create-stock"></div>
       <div id="stock-container"></div>
     `;
   },
 
   async afterRender() {
+    window.scrollTo(0, 0); // Geser ke bagian atas halaman
     const stockContainer = document.getElementById('create-stock');
     stockContainer.innerHTML += stockFormCreator();
     const inputs = document.querySelectorAll('#bloodStockForm input[type="number"]');
@@ -21,12 +29,7 @@ const UpdateStock = {
     const bloodStocks = await SatuDarahSource.getAllstock();
     const myBloodStocks = bloodStocks[0];
     const stockId = myBloodStocks.id;
-    // eslint-disable-next-line max-len
-    const filteredBloodStocks = bloodStocks.filter((bloodStock) => bloodStock.username === username);
 
-    console.log(filteredBloodStocks);
-    console.log(stockId);
-    console.log(username);
     if (myBloodStocks) {
       document.getElementById('providerName').value = myBloodStocks.providerName || '';
       document.getElementById('address').value = myBloodStocks.address || '';
@@ -132,15 +135,12 @@ const UpdateStock = {
         console.log('Stock updated:', updatedStock);
 
         // Handle tindakan setelah stok berhasil diperbarui
-        const updateStockContainer = document.getElementById('create-stock');
-        updateStockContainer.innerHTML = '<p>Stock updated successfully!</p>';
-        await navigateTo('/#/profile');
+        showModal('Stock Darah berhasil diubah!');
+        setTimeout(() => {
+          navigateTo('/#/profile');
+        }, 1000);
       } catch (error) {
-        console.error('Failed to update stock:', error.message);
-        // Handle kesalahan ketika melakukan pembaharuan stok
-
-        const updateStockContainer = document.getElementById('create-stock');
-        updateStockContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+        showModal(error);
       }
     });
   },

@@ -1,0 +1,199 @@
+@media screen and (max-width: 1000px) {
+ 
+  #create-event {
+    width: 70%;
+   }
+    .table-container {
+      display: grid;
+     grid-template-columns: repeat(1, 1fr);
+     gap: 20px;
+     margin: 0 5%;
+    }
+  #show-event, #profile-event {
+    display: grid;
+    grid-template-columns: repeat(1 , 1fr); gap: 20px;
+  }
+  #gambarhero {
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    justify-content: center;
+    align-items: center;
+    #img-container{
+      justify-content: center;
+    }
+  }
+  #hero-text {
+    width: 100%;
+    text-align: center;
+    padding: 0 20px;
+    justify-content: center;
+  }
+  #hero-image {
+    width: 100%;
+    max-width: 300px; /* Atur lebar maksimum gambar */
+    display: block;
+  }
+  #username-corner {
+    font-size: 1em;
+  }
+  .fa-solid {
+    font-size: 1.7em;
+  }
+  .fa-circle-user {
+    font-size: 1.7em;
+  }
+    #gambarhero {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .keuntungan-container {
+        img {
+          width: 300px;
+        }
+      }
+    
+}
+@media screen and (max-width: 440px) {
+  .sidenav {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    button {
+      width: 80%;
+      margin: 0;
+    }
+  }
+  #dropdown-container {
+    display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+  }
+  #keuntungan-donor {
+    margin: 0 2%;
+  }
+
+  .table-container {
+
+   margin: 0 1%;
+  }
+
+  #blood-stock {
+    margin: 0;
+  }
+    .event-wrapper {
+        display: flex;
+        flex-direction: column ;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+    
+}
+@media screen and (max-width: 650px) {
+  #profile-event {
+    .event-wrapper {
+      display: flex;
+      flex-direction: column ;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+  }
+
+  #create-event {
+    width: 80%;
+   }
+  .icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .section-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .fa-solid  {
+    font-size: 1.5em;
+  }
+    .app-bar .app-bar__brand h1 {
+      font-size: 1.5em;
+    }
+    #hero > #hero-text {
+        margin-top: -600px;
+    }   
+    #gambarhero {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        justify-content: center;
+        align-items: center;
+      }
+      #hero-text {
+        width: 100%;
+        text-align: center;
+        padding: 0 20px;
+        justify-content: center;
+      }
+      #hero-image {
+        width: 100%;
+        max-width: 300px; /* Atur lebar maksimum gambar */
+        display: block;
+      }
+      
+      #img-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #show-event, #profile-event {
+        display: grid;
+        grid-template-columns: repeat(1 , 1fr); gap: 20px;
+      }
+ 
+  }
+  @media screen and (min-width: 850px) {
+  
+    .app-bar .app-bar__menu {
+      display: none;
+    }
+    .app-bar {
+      grid-template-columns: 1fr auto;
+      padding: 8px 32px;
+    }
+    #hero > #hero-text {
+        margin-top: -600px;
+    }  
+   
+    .app-bar .app-bar__navigation {
+      z-index: 0;
+      position: static;
+      width: 100%;
+    }
+   
+    .app-bar .app-bar__navigation ul li {
+      display: inline-block;
+    }
+   
+    .app-bar .app-bar__navigation ul li a {
+      display: inline-block;
+      width: 100px;
+      text-align: center;
+      margin: 0;
+    }
+  }
+   
+  @media screen and (min-width: 800px) {
+    .app-bar .app-bar__brand h1 {
+      font-size: 2em;
+    }
+  }
+   
+ 

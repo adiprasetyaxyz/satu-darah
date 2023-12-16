@@ -1,9 +1,13 @@
 import '../styles/style.scss';
+import '../styles/responsive.scss';
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import loginUsername from './utils/login-username';
 import logout from './utils/logout';
 import notif from './utils/notif';
 // eslint-disable-next-line import/no-unresolved
-import App from './views/App';
+import App from './views/app';
+import swRegister from './utils/sw-register';
 
 // eslint-disable-next-line no-unused-vars
 const app = new App({
@@ -16,11 +20,13 @@ window.addEventListener('hashchange', () => {
   app.renderPage();
   loginUsername();
   notif();
+  logout();
 });
 
 window.addEventListener('load', () => {
+  swRegister();
   app.renderPage();
   loginUsername();
-  logout();
   notif();
+  logout();
 });
