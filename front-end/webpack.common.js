@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const ImageminWebpackPlugin = require('imagemin-webpack-plugin').default;
 const ImageminMozjpeg = require('imagemin-mozjpeg');
 const path = require('path');
@@ -66,18 +66,6 @@ module.exports = {
         },
       ],
     }),
-    new WorkboxWebpackPlugin.GenerateSW({
-      swDest: './sw.bundle.js',
-      runtimeCaching: [
-        {
-          urlPattern: ({ url }) => url.href.startsWith('http://localhost:3000/api/'),
-          handler: 'StaleWhileRevalidate',
-          options: {
-            cacheName: 'satudarah-api',
-          },
-        },
-      ],
-    }),
     new ImageminWebpackPlugin({
       plugins: [
         ImageminMozjpeg({
@@ -87,5 +75,17 @@ module.exports = {
       ],
     }),
     new BundleAnalyzerPlugin(),
+    new WorkboxWebpackPlugin.GenerateSW({
+      swDest: './sw.bundle.js',
+      runtimeCaching: [
+        {
+          urlPattern: ({ url }) => url.href.startsWith('https://determined-red-flip-flops.cyclic.app//api/'),
+          handler: 'StaleWhileRevalidate',
+          options: {
+            cacheName: 'satudarah-api',
+          },
+        },
+      ],
+    }),
   ],
 };
