@@ -8,7 +8,7 @@ import { userRouter } from '../route/api.js';
 export const web = express();
 
 web.use(cors({
-  origin: 'http://localhost:9001', // Atur origin yang diizinkan
+  origin: 'https://main--whimsical-basbousa-bf7dbd.netlify.app', // Atur origin yang diizinkan
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Atur metode HTTP yang diizinkan
   credentials: true, // Izinkan kredensial, jika diperlukan
 }));
