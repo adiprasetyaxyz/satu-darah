@@ -1,10 +1,13 @@
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ImageminWebpackPlugin = require('imagemin-webpack-plugin').default;
 const ImageminMozjpeg = require('imagemin-mozjpeg');
-const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -31,28 +34,41 @@ module.exports = {
     ],
   },
   optimization: {
+    runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
-      minSize: 20000,
-      maxSize: 70000,
-      minChunks: 1,
-      maxAsyncRequests: 30,
-      maxInitialRequests: 30,
-      automaticNameDelimiter: '~',
-      enforceSizeThreshold: 50000,
       cacheGroups: {
-        defaultVendors: {
+        vendor: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10,
+          name: 'vendors',
+          chunks: 'all',
+          enforce: true,
         },
-        default: {
+        common: {
+          name: 'common',
           minChunks: 2,
-          priority: -20,
+          chunks: 'async',
+          priority: 10,
           reuseExistingChunk: true,
+          enforce: true,
         },
       },
     },
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+        terserOptions: {
+          compress: {
+            drop_console: true,
+            // lainnya
+          },
+        },
+      }),
+      new CssMinimizerPlugin(),
+    ],
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -74,7 +90,7 @@ module.exports = {
         }),
       ],
     }),
-    new BundleAnalyzerPlugin(),
+    new CleanWebpackPlugin(),
     new WorkboxWebpackPlugin.GenerateSW({
       swDest: './sw.bundle.js',
       runtimeCaching: [
@@ -87,5 +103,6 @@ module.exports = {
         },
       ],
     }),
+    new BundleAnalyzerPlugin(),
   ],
 };
