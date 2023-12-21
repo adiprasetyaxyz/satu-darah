@@ -94,7 +94,7 @@ module.exports = {
       swDest: './sw.bundle.js',
       runtimeCaching: [
         {
-          urlPattern: ({ url }) => url.href.startsWith('https://good-gold-vulture-wig.cyclic.app/api/'),
+          urlPattern: ({ url }) => url.href.startsWith('http://8.218.145.137:3000/api/'),
           handler: 'StaleWhileRevalidate',
           options: {
             cacheName: 'satudarah-api',
