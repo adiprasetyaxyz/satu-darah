@@ -93,6 +93,8 @@
       }
     
 }
+
+// small size
 @media screen and (max-width: 650px) {
   #profile-event {
     .event-wrapper {
@@ -121,10 +123,10 @@
   }
   
   .fa-solid  {
-    font-size: 1.5em;
+    font-size: 1.75em;
   }
     .app-bar .app-bar__brand h1 {
-      font-size: 1.5em;
+      font-size: 1.75em;
     }
     #hero > #hero-text {
         margin-top: -600px;
@@ -189,10 +191,10 @@
       margin: 0;
     }
   }
-   
+  //  for large size
   @media screen and (min-width: 800px) {
     .app-bar .app-bar__brand h1 {
-      font-size: 2em;
+      font-size: 1.75em;
     }
   }
    
